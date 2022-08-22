@@ -5,16 +5,9 @@ import { EditarAlumnosComponent } from '../editar-alumnos/editar-alumnos.compone
 import { CrearAlumnosComponent } from '../crear-alumnos/crear-alumnos.component';
 import { IfStmt } from '@angular/compiler';
 import { Alumnos } from 'src/app/models/alumnos';
+import { AlumnoService } from 'src/app/services/alumno.service';
+import { Subscription } from 'rxjs';
 
-
-
-const ELEMENT_DATA: Alumnos[] = [
-  {nombre: 'Ezequiel', apellido: 'Weiss', fechaNacimiento: ("1997-07-01"), curso: 'Angular', comision: 32110, profesor: 'Abner Garcia', matriculaAbierta: true},
- {nombre: 'Rodolfo', apellido: 'López', fechaNacimiento: '1957-03-04', curso: 'ReactJS', comision: 22110, profesor: 'José González', matriculaAbierta: true},
- {nombre: 'Pablo', apellido: 'Fernández', fechaNacimiento: '1998-08-09', curso: 'Wordpress', comision: 5897, profesor: 'Carlos Zambrano', matriculaAbierta: false},
-{nombre: 'Iván', apellido: 'De Pineda', fechaNacimiento: '1975-11-30', curso: 'Marketing Digital', comision: 10257, profesor: 'Fernando Garces', matriculaAbierta: false},
- {nombre: 'Marcos', apellido: 'Jerez', fechaNacimiento: '1995-11-25', curso: 'Python', comision: 5878, profesor: 'Rufino Diaz', matriculaAbierta: true}
-];
 
 
 @Component({
@@ -23,24 +16,33 @@ const ELEMENT_DATA: Alumnos[] = [
   styleUrls: ['./lista-alumnos.component.css']
 })
 export class ListaAlumnosComponent implements OnInit {
-  columns: string[] = [ 'apellido', 'fechaNacimiento','curso', 'comision', 'profesor', 'matriculaAbierta', 'acciones'];
-  dataSource: MatTableDataSource <Alumnos> = new MatTableDataSource(ELEMENT_DATA);
+  alumnosSubscription!: Subscription;
+  columns: string[] = [ 'id','apellido', 'fechaNacimiento','curso', 'comision', 'profesor', 'matriculaAbierta', 'acciones'];
+  dataSource: MatTableDataSource <Alumnos> = new MatTableDataSource([] as Alumnos[]);
   @ViewChild(MatTable) tabla!: MatTable<Alumnos>;
   constructor(
-    private dialog: MatDialog
-  ) { }
-
-  ngOnInit(): void {
+    private dialog: MatDialog,
+    private alumnoService: AlumnoService
+  ) { 
   }
 
+  ngOnInit(): void {
+    this.alumnosSubscription = this.alumnoService.obtenerAlumnos().subscribe(alumnos => {
+      this.dataSource.data = alumnos;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.alumnosSubscription.unsubscribe();
+  }
   crear(){
     const dialogRef = this.dialog.open(CrearAlumnosComponent,{
       width: '300px',
       data: 'elemento'
     });
-    dialogRef.afterClosed().subscribe(res => {
+    dialogRef.afterClosed().subscribe((res: Alumnos) => {
       if(res){
-        this.dataSource.data.push(res);
+      this.alumnoService.agregarAlumno(res);
       this.tabla.renderRows();
       }
     })
@@ -52,17 +54,18 @@ export class ListaAlumnosComponent implements OnInit {
       data: elemento
     });
 
-    dialogRef.afterClosed().subscribe(resultado=>{
-      if(resultado){
-        const item = this.dataSource.data.find(curso => curso.comision === elemento.comision);
-        const index = this.dataSource.data.indexOf(item!);
-        this.dataSource.data[index] = resultado;
+    dialogRef.afterClosed().subscribe((res: Alumnos)=>{
+      if(res){
+        // const item = this.dataSource.data.find(curso => curso.comision === elemento.comision);
+        // const index = this.dataSource.data.indexOf(item!);
+        // this.dataSource.data[index] = resultado;
+        this.alumnoService.editarAlumno(res);
         this.tabla.renderRows();
       }
     })
   }
 
   eliminar(elemento: Alumnos){
-    this.dataSource.data = this.dataSource.data.filter((lista: Alumnos) => lista.comision != elemento.comision);
+    this.alumnoService.eliminarAlumno(elemento);
   }
 }

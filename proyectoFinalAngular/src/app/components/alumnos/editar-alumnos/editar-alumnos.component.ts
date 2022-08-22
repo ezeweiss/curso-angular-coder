@@ -18,13 +18,14 @@ export class EditarAlumnosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Alumnos
   ) { 
     this.formAlumnos = fb.group({
-      nombre: new FormControl(data.nombre),
-      apellido: new FormControl(data.apellido), 
-      fechaNacimiento: new FormControl(data.fechaNacimiento),
-      curso: new FormControl(data.curso),
-      comision: new FormControl(data.comision),
-      profesor: new FormControl(data.profesor),
-      matriculaAbierta: new FormControl(data.matriculaAbierta)
+      id: new FormControl(data.id, [Validators.required]),
+      nombre: new FormControl(data.nombre, [Validators.required]),
+      apellido: new FormControl(data.apellido, [Validators.required]), 
+      fechaNacimiento: new FormControl(data.fechaNacimiento, [Validators.required]),
+      curso: new FormControl(data.curso, [Validators.required]),
+      comision: new FormControl(data.comision, [Validators.required]),
+      profesor: new FormControl(data.profesor, [Validators.required]),
+      matriculaAbierta: new FormControl(data.matriculaAbierta, [Validators.required])
     })
   }
 
