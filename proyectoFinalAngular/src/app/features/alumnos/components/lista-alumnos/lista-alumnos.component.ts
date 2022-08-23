@@ -14,7 +14,7 @@ import { EditarAlumnosComponent } from '../editar-alumnos/editar-alumnos.compone
 })
 export class ListaAlumnosComponent implements OnInit {
   alumnosSubscription!: Subscription;
-  columns: string[] = [ 'id','apellido', 'fechaNacimiento','curso', 'comision', 'profesor', 'matriculaAbierta', 'acciones'];
+  columns: string[] = ['apellido', 'fechaNacimiento','curso', 'comision', 'profesor', 'matriculaAbierta', 'acciones'];
   dataSource: MatTableDataSource <Alumnos> = new MatTableDataSource([] as Alumnos[]);
   @ViewChild(MatTable) tabla!: MatTable<Alumnos>;
   constructor(
@@ -57,7 +57,7 @@ export class ListaAlumnosComponent implements OnInit {
         // const index = this.dataSource.data.indexOf(item!);
         // this.dataSource.data[index] = resultado;
         this.alumnoService.editarAlumno(res);
-        this.tabla.renderRows();
+
       }
     })
   }

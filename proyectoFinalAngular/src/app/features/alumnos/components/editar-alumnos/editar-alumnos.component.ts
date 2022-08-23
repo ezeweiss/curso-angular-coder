@@ -17,7 +17,6 @@ export class EditarAlumnosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Alumnos
   ) { 
     this.formAlumnos = fb.group({
-      id: new FormControl(data.id, [Validators.required]),
       nombre: new FormControl(data.nombre, [Validators.required]),
       apellido: new FormControl(data.apellido, [Validators.required]), 
       fechaNacimiento: new FormControl(data.fechaNacimiento, [Validators.required]),
@@ -36,6 +35,11 @@ export class EditarAlumnosComponent implements OnInit {
   }
 
   actualizar(){
-    this.dialogRef.close(this.formAlumnos.value);
+    // this.dialogRef.close(this.formAlumnos.value);
+    if(this.formAlumnos.status === "VALID"){
+      this.dialogRef.close({id:this.data.id, ...this.formAlumnos.value});
+    }else{
+      this.formAlumnos.markAllAsTouched();
+    }
   }
 }

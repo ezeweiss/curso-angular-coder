@@ -10,6 +10,7 @@
     "menu content content content content";
     height: 100%;
   padding: 0;
+  width:1500px;
 }
 .header {
   grid-area: header;
@@ -20,6 +21,7 @@
 }
 .content {
   grid-area: content;
+  margin-left: 50px;
 
 }
 .menuComponent{

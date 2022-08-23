@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreRoutingModule } from './core-routing.module';
-import { InicioComponent } from './components/inicio/inicio.component';
-import { CoreMaterialModule } from './core.material.module';
+import { AlumnosModule } from '../features/alumnos/alumnos.module';
 import { SharedModule } from '../shared/shared.module';
-import { AlumnosModule } from '../alumnos/alumnos.module';
-import { ListaAlumnosComponent } from '../alumnos/components/lista-alumnos/lista-alumnos.component';
+import { CursosModule } from '../features/cursos/cursos.module';
+import { SharedMaterialModule } from '../shared/shared.material.module';
 
 
 @NgModule({
@@ -15,9 +14,9 @@ import { ListaAlumnosComponent } from '../alumnos/components/lista-alumnos/lista
   imports: [
     CommonModule,
     CoreRoutingModule,
-    CoreMaterialModule,
     SharedModule,
-    AlumnosModule
+    AlumnosModule,
+    CursosModule
   ]
 })
 export class CoreModule { }

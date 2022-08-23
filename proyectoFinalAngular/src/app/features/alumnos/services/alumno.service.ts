@@ -40,7 +40,6 @@ export class AlumnoService {
         return elemento;
       }
     });
-
     this.alumnos$.next(this.alumnos);
   }
   

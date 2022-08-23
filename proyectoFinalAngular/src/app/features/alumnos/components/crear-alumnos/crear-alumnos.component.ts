@@ -16,7 +16,6 @@ export class CrearAlumnosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Alumnos
   ) {
     this.formAlumnos = fb.group({
-    id: new FormControl('', [Validators.required]),
     nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
     apellido: new FormControl('', [Validators.required, Validators.minLength(3)]),
     fechaNacimiento: new FormControl('', Validators.required),

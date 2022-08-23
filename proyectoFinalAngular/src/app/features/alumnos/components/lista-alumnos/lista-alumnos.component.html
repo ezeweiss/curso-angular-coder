@@ -7,10 +7,6 @@
 <br>
 <br>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef [appTamanio]="'20px'"> Id</th>
-      <td mat-cell *matCellDef="let element"> {{element.id}}</td>
-    </ng-container>
 
     <ng-container matColumnDef="apellido">
       <th mat-header-cell *matHeaderCellDef [appTamanio]="'20px'"> Apellido y Nombre</th>

@@ -27,4 +27,4 @@ import {MatInputModule} from '@angular/material/input';
     ]
 
 })
-export class CoreMaterialModule{}
+export class SharedMaterialModule{}
