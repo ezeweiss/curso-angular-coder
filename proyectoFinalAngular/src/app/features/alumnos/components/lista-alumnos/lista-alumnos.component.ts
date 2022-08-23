@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { EditarAlumnosComponent } from '../editar-alumnos/editar-alumnos.component';
-import { CrearAlumnosComponent } from '../crear-alumnos/crear-alumnos.component';
-import { IfStmt } from '@angular/compiler';
-import { Alumnos } from 'src/app/models/alumnos';
-import { AlumnoService } from 'src/app/services/alumno.service';
 import { Subscription } from 'rxjs';
-
-
+import { Alumnos } from 'src/app/models/alumnos';
+import { AlumnoService } from '../../services/alumno.service';
+import { CrearAlumnosComponent } from '../crear-alumnos/crear-alumnos.component';
+import { EditarAlumnosComponent } from '../editar-alumnos/editar-alumnos.component';
 
 @Component({
   selector: 'app-lista-alumnos',

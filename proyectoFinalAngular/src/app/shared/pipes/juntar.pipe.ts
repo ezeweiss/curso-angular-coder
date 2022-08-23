@@ -8,7 +8,7 @@ export class JuntarPipe implements PipeTransform {
 
   transform(value: Alumnos, ...args: unknown[]): unknown {
     
-  return value.apellido.toUpperCase() + ' ' + value.nombre;
-  }
+    return value.apellido.toUpperCase() + ' ' + value.nombre;
+    }
 
 }
