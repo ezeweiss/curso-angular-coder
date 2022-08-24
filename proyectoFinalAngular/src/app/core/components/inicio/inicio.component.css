@@ -1,4 +1,4 @@
-.container {
+.contenedor {
   display: grid;
   grid-template-columns: 0.5fr 1.5fr 1fr 1fr 1fr;
   grid-template-rows: 0.2fr 1.8fr 1fr 1fr;
@@ -10,7 +10,6 @@
     "menu content content content content";
     height: 100%;
   padding: 0;
-  width:1500px;
 }
 .header {
   grid-area: header;
@@ -21,7 +20,7 @@
 }
 .content {
   grid-area: content;
-  margin-left: 50px;
+  margin-left: 10px;
 
 }
 .menuComponent{
