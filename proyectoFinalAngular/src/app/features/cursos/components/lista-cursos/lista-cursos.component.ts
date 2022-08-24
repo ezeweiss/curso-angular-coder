@@ -14,7 +14,7 @@ import { EditarCursosComponent } from '../editar-cursos/editar-cursos.component'
 })
 export class ListaCursosComponent implements OnInit {
   cursosSubscription!: Subscription;
-  columns: string[] = ['nombre', 'comision','cantidadEstudiantes', 'acciones'];
+  columns: string[] = ['nombreCurso', 'comision','cantidadEstudiantes', 'acciones'];
   dataSource: MatTableDataSource <Cursos> = new MatTableDataSource([] as Cursos[]);
   @ViewChild(MatTable) tabla!: MatTable<Cursos>;
   constructor(

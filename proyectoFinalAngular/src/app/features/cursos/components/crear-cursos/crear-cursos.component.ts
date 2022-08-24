@@ -16,7 +16,7 @@ export class CrearCursosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Cursos
   ) {
     this.formCursos = fb.group({
-    nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    nombreCurso: new FormControl('', [Validators.required, Validators.minLength(3)]),
     comision: new FormControl('', [Validators.required, Validators.minLength(3)]),
     cantidadEstudiantes: new FormControl('', Validators.required)
     })

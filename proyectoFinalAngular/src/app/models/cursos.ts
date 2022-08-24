@@ -1,6 +1,6 @@
 export interface Cursos{
     id: number,
-    nombre: string,
+    nombreCurso: string,
     comision: number,
     cantidadEstudiantes: number,
   }

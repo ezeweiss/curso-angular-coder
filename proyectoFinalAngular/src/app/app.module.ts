@@ -11,6 +11,7 @@ import { AlumnosModule } from './features/alumnos/alumnos.module';
 import { SharedMaterialModule } from './shared/shared.material.module';
 import { MatIconModule } from '@angular/material/icon';
 import { CursosModule } from './features/cursos/cursos.module';
+import { InscripcionesModule } from './features/inscripciones/inscripciones.module';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { CursosModule } from './features/cursos/cursos.module';
     MatIconModule ,
     FormsModule,
     CursosModule,
-    AlumnosModule
+    AlumnosModule,
+    InscripcionesModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

@@ -23,7 +23,7 @@
   margin-left: 10px;
 
 }
-.menuComponent{
+.contenedorMenu{
   display: flex;
   flex-direction: column;
 }
@@ -37,6 +37,6 @@
   font-size: 1rem;
   margin-right: 8px;
 }
-.buttonTitle{
+.tituloBoton{
   margin-left: 8px;
 }
