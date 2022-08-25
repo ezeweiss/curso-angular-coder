@@ -31,7 +31,6 @@ export class EditarCursosComponent implements OnInit {
   }
 
   actualizar(){
-    // this.dialogRef.close(this.formAlumnos.value);
     if(this.formCursos.status === "VALID"){
       this.dialogRef.close({id:this.data.id, ...this.formCursos.value});
     }else{

@@ -6,18 +6,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
-import { InicioComponent } from './core/components/inicio/inicio.component';
+import { LayoutComponent } from './core/components/layout/layout.component';
 import { AlumnosModule } from './features/alumnos/alumnos.module';
 import { SharedMaterialModule } from './shared/shared.material.module';
-import { MatIconModule } from '@angular/material/icon';
 import { CursosModule } from './features/cursos/cursos.module';
 import { InscripcionesModule } from './features/inscripciones/inscripciones.module';
-
 
 @NgModule({
   declarations: [
     AppComponent,
-    InicioComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +25,6 @@ import { InscripcionesModule } from './features/inscripciones/inscripciones.modu
     ReactiveFormsModule,
     SharedModule,
     SharedMaterialModule,
-    MatIconModule ,
     FormsModule,
     CursosModule,
     AlumnosModule,

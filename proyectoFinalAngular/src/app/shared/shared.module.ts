@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { JuntarPipe } from './pipes/juntar.pipe';
 import { TamanioDirective } from './directives/tamanio.directive';
 import { SharedMaterialModule } from './shared.material.module';
-
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -12,13 +11,15 @@ import { SharedMaterialModule } from './shared.material.module';
     TamanioDirective
   ],
   imports: [
+    ReactiveFormsModule,
     CommonModule,
     SharedMaterialModule
   ],
   exports:[
     JuntarPipe,
     TamanioDirective,
-    SharedMaterialModule
+    SharedMaterialModule,
+    ReactiveFormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

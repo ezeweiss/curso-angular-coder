@@ -1,7 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListaCursosComponent } from './components/lista-cursos/lista-cursos.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CursoService } from './services/curso.service';
 import { SharedMaterialModule } from 'src/app/shared/shared.material.module';
@@ -19,7 +18,6 @@ import { DetalleCursosComponent } from './components/detalle-cursos/detalle-curs
   imports: [
     CommonModule,
     SharedModule,
-    ReactiveFormsModule,
     SharedMaterialModule
   ],
   providers:[

@@ -38,7 +38,7 @@ export class ListaInscripcionesComponent implements OnInit {
   editar(inscripcion: Inscripciones) {
     const dialogRef = this.dialog.open(EditarInscripcionesComponent, {
       width: '300px',
-      data: {inscripcion: inscripcion, mode: 'Editar'}
+      data: {inscripcion: inscripcion}
     });
 
     dialogRef.afterClosed().subscribe((res: Inscripciones) => {
@@ -70,7 +70,7 @@ export class ListaInscripcionesComponent implements OnInit {
   detalle(inscripcion: Inscripciones) {
     const dialogRef = this.dialog.open(DetalleInscripcionesComponent, {
       width: '300px',
-      data: {inscripciones: inscripcion, mode: 'Visualizar'}
+      data: {inscripciones: inscripcion}
     });
 
     dialogRef.afterClosed().subscribe((res: Inscripciones) => {

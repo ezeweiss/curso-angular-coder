@@ -54,11 +54,7 @@ export class ListaCursosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res: Cursos)=>{
       if(res){
-        // const item = this.dataSource.data.find(curso => curso.comision === elemento.comision);
-        // const index = this.dataSource.data.indexOf(item!);
-        // this.dataSource.data[index] = resultado;
         this.cursoService.editarCurso(res);
-
       }
     })
   }
@@ -66,7 +62,7 @@ export class ListaCursosComponent implements OnInit {
   detalle(curso: Cursos) {
     this.dialog.open(DetalleCursosComponent, {
       width: '300px',
-      data: {curso: curso, mode: 'Visualizar'}
+      data: {curso: curso}
     });
   }
 

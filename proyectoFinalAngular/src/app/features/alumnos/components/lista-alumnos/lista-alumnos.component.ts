@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import {v4 as uuidv4} from "uuid";
+
 import { Alumnos } from 'src/app/models/alumnos';
 import { AlumnoService } from '../../services/alumno.service';
 import { CrearAlumnosComponent } from '../crear-alumnos/crear-alumnos.component';
@@ -37,7 +37,7 @@ export class ListaAlumnosComponent implements OnInit {
   crear(){
     const dialogRef = this.dialog.open(CrearAlumnosComponent,{
       width: '300px',
-      data: {inscripcion: {id: uuidv4()}, mode: 'Agregar'}
+      data: {inscripcion: 'elemento'}
     });
     dialogRef.afterClosed().subscribe((res: Alumnos) => {
       if(res){
@@ -63,7 +63,7 @@ export class ListaAlumnosComponent implements OnInit {
   detalle(alumno: Alumnos) {
     this.dialog.open(DetalleAlumnosComponent, {
       width: '300px',
-      data: {alumno: alumno, mode: 'Visualizar'}
+      data: {alumno: alumno}
     });
   }
 
