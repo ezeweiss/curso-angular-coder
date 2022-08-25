@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Detalle inscripción</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formInscripciones">
+        <mat-form-field appearance="fill">
+            <mat-label>Curso</mat-label>
+            <mat-select formControlName="curso" [compareWith]="compararId">
+            <mat-option *ngFor="let curso of cursos$ | async" [value]="curso">
+                {{curso.nombreCurso}}
+              </mat-option>
+            </mat-select>
+            <mat-error>El campo curso es Obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Alumno</mat-label>
+            <mat-select formControlName="alumno" [compareWith]="compararId">
+            <mat-option *ngFor="let alumno of alumnos$ | async" [value]="alumno">
+                {{alumno | juntar}}
+              </mat-option>
+            </mat-select>
+            <mat-error>El campo alumno es Obligatorio</mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions class="dialog-buttons">
+  <button mat-raised-button (click)="cerrar()">Cerrar</button>
+</div>

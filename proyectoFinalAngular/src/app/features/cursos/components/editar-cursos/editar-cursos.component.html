@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Editar curso</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formCursos">
+        <mat-form-field appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <input formControlName="nombreCurso" matInput>
+            <mat-error>El campo nombre es Obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Comisión</mat-label>
+            <input formControlName="comision" matInput>
+            <mat-error>El campo comisión es Obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cantidad de estudiantes</mat-label>
+            <input type="number" formControlName="cantidadEstudiantes" matInput>
+            <mat-error>El campo cantidad de estudiantes es Obligatorio</mat-error>
+        </mat-form-field>
+
+    </form>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="cerrar()">Cerrar</button>
+    <button mat-button [disabled]="formCursos.invalid" (click)="actualizar()">Actualizar</button>
+</div>
+
+
+
+
