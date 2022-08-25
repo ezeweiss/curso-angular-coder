@@ -7,14 +7,14 @@ import { CursoService } from './services/curso.service';
 import { SharedMaterialModule } from 'src/app/shared/shared.material.module';
 import { EditarCursosComponent } from './components/editar-cursos/editar-cursos.component';
 import { CrearCursosComponent } from './components/crear-cursos/crear-cursos.component';
-
-
+import { DetalleCursosComponent } from './components/detalle-cursos/detalle-cursos.component';
 
 @NgModule({
   declarations: [
     ListaCursosComponent,
     EditarCursosComponent,
-    CrearCursosComponent
+    CrearCursosComponent,
+    DetalleCursosComponent
   ],
   imports: [
     CommonModule,

@@ -3,11 +3,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Cursos } from 'src/app/models/cursos';
 
 const ELEMENT_DATA: Cursos[] = [
-  {id:1, nombreCurso: 'Angular', cantidadEstudiantes: 45, comision: 2587},
-  {id:2, nombreCurso: 'ReactJs', cantidadEstudiantes: 75, comision: 3584},
-  {id:3, nombreCurso: 'Python', cantidadEstudiantes: 90, comision: 1158},
-  {id:4, nombreCurso: 'Wordpress', cantidadEstudiantes: 100, comision: 2254},
-  {id:5, nombreCurso: 'Javascript', cantidadEstudiantes: 87, comision: 5897}
+  {id:1, nombreCurso: 'Angular', cantidadEstudiantes: 45, comision: 32110},
+  {id:2, nombreCurso: 'ReactJS', cantidadEstudiantes: 75, comision: 22110},
+  {id:3, nombreCurso: 'Wordpress', cantidadEstudiantes: 90, comision: 5897},
+  {id:4, nombreCurso: 'Marketing Digital', cantidadEstudiantes: 100, comision: 10257},
+  {id:5, nombreCurso: 'Python', cantidadEstudiantes: 87, comision: 5878}
   ];
 
 @Injectable({

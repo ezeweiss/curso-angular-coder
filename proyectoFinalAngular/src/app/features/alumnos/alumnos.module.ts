@@ -7,12 +7,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CrearAlumnosComponent } from './components/crear-alumnos/crear-alumnos.component';
 import { AlumnoService } from './services/alumno.service';
 import { SharedMaterialModule } from 'src/app/shared/shared.material.module';
+import { DetalleAlumnosComponent } from './components/detalle-alumnos/detalle-alumnos.component';
 
 @NgModule({
   declarations: [
     ListaAlumnosComponent,
     EditarAlumnosComponent,
-    CrearAlumnosComponent
+    CrearAlumnosComponent,
+    DetalleAlumnosComponent
   ],
   imports: [
     CommonModule,

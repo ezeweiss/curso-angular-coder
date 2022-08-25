@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Cursos } from 'src/app/models/cursos';
 import { CursoService } from '../../services/curso.service';
 import { CrearCursosComponent } from '../crear-cursos/crear-cursos.component';
+import { DetalleCursosComponent } from '../detalle-cursos/detalle-cursos.component';
 import { EditarCursosComponent } from '../editar-cursos/editar-cursos.component';
 
 @Component({
@@ -60,6 +61,13 @@ export class ListaCursosComponent implements OnInit {
 
       }
     })
+  }
+
+  detalle(curso: Cursos) {
+    this.dialog.open(DetalleCursosComponent, {
+      width: '300px',
+      data: {curso: curso, mode: 'Visualizar'}
+    });
   }
 
   eliminar(elemento: Cursos){

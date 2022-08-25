@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import {v4 as uuidv4} from "uuid";
 import { Alumnos } from 'src/app/models/alumnos';
 import { AlumnoService } from '../../services/alumno.service';
 import { CrearAlumnosComponent } from '../crear-alumnos/crear-alumnos.component';
+import { DetalleAlumnosComponent } from '../detalle-alumnos/detalle-alumnos.component';
 import { EditarAlumnosComponent } from '../editar-alumnos/editar-alumnos.component';
 
 @Component({
@@ -35,7 +37,7 @@ export class ListaAlumnosComponent implements OnInit {
   crear(){
     const dialogRef = this.dialog.open(CrearAlumnosComponent,{
       width: '300px',
-      data: 'elemento'
+      data: {inscripcion: {id: uuidv4()}, mode: 'Agregar'}
     });
     dialogRef.afterClosed().subscribe((res: Alumnos) => {
       if(res){
@@ -53,13 +55,16 @@ export class ListaAlumnosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res: Alumnos)=>{
       if(res){
-        // const item = this.dataSource.data.find(curso => curso.comision === elemento.comision);
-        // const index = this.dataSource.data.indexOf(item!);
-        // this.dataSource.data[index] = resultado;
         this.alumnoService.editarAlumno(res);
-
       }
     })
+  }
+
+  detalle(alumno: Alumnos) {
+    this.dialog.open(DetalleAlumnosComponent, {
+      width: '300px',
+      data: {alumno: alumno, mode: 'Visualizar'}
+    });
   }
 
   eliminar(elemento: Alumnos){
