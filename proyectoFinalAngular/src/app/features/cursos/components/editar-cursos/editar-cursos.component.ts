@@ -17,7 +17,7 @@ export class EditarCursosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Cursos
   ) { 
     this.formCursos = fb.group({
-      nombre: new FormControl(data.nombreCurso, [Validators.required]),
+      nombreCurso: new FormControl(data.nombreCurso, [Validators.required]),
       comision: new FormControl(data.comision, [Validators.required]), 
       cantidadEstudiantes: new FormControl(data.cantidadEstudiantes, [Validators.required])
     })
