@@ -1,10 +1,8 @@
 export interface Alumnos{
-    id: number,
+    id: string,
     nombre: string,
     apellido: string
     fechaNacimiento:  string,
-    curso: string,
-    comision: number,
-    profesor: string,
+    email: string,
     matriculaAbierta: boolean
   }

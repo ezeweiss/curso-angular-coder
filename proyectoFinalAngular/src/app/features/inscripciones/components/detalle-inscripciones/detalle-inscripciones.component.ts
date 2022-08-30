@@ -6,6 +6,7 @@ import { Cursos } from 'src/app/models/cursos';
 import { CursoService } from '../../../cursos/services/curso.service';
 import { AlumnoService } from '../../../alumnos/services/alumno.service';
 import { Alumnos } from 'src/app/models/alumnos';
+import { Inscripciones } from '../../../../models/inscripciones';
 
 @Component({
   selector: 'app-detalle-inscripciones',
@@ -21,11 +22,11 @@ export class DetalleInscripcionesComponent implements OnInit {
     private dialogRef: MatDialogRef<DetalleInscripcionesComponent>,
     private cursoService: CursoService,
     private alumnoService: AlumnoService,
-    @Inject(MAT_DIALOG_DATA) private data: any
+    @Inject(MAT_DIALOG_DATA) private inscripciones: any
   ) { 
     this.formInscripciones = fb.group({
-      curso: new FormControl({ value: data.inscripciones.curso, disabled: true }),
-      alumno: new FormControl( { value: data.inscripciones.alumno, disabled: true })
+      curso: new FormControl({ value: inscripciones.curso, disabled: true }),
+      alumno: new FormControl( { value: inscripciones.alumno, disabled: true })
     });
   }
 

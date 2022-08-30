@@ -2,7 +2,7 @@ import { Alumnos } from "./alumnos";
 import { Cursos } from "./cursos";
 
 export interface Inscripciones{
-    id: number,
+    id: string,
     alumno: Alumnos,
     curso: Cursos
 }

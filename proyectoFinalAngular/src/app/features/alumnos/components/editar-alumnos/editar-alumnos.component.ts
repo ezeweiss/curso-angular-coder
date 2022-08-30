@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Alumnos } from 'src/app/models/alumnos';
+import { AlumnoService } from '../../services/alumno.service';
 
 @Component({
   selector: 'app-editar-alumnos',
@@ -14,15 +15,14 @@ export class EditarAlumnosComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditarAlumnosComponent>,
+    private alumnoService: AlumnoService,
     @Inject(MAT_DIALOG_DATA) public data: Alumnos
   ) { 
     this.formAlumnos = fb.group({
       nombre: new FormControl(data.nombre, [Validators.required]),
       apellido: new FormControl(data.apellido, [Validators.required]), 
       fechaNacimiento: new FormControl(data.fechaNacimiento, [Validators.required]),
-      curso: new FormControl(data.curso, [Validators.required]),
-      comision: new FormControl(data.comision, [Validators.required]),
-      profesor: new FormControl(data.profesor, [Validators.required]),
+      email: new FormControl(data.email, [Validators.required, Validators.email]),
       matriculaAbierta: new FormControl(data.matriculaAbierta, [Validators.required])
     })
   }
@@ -35,11 +35,16 @@ export class EditarAlumnosComponent implements OnInit {
   }
 
   actualizar(){
-    // this.dialogRef.close(this.formAlumnos.value);
-    if(this.formAlumnos.status === "VALID"){
-      this.dialogRef.close({id:this.data.id, ...this.formAlumnos.value});
-    }else{
-      this.formAlumnos.markAllAsTouched();
+    const alumno: Alumnos = {
+      id: this.data.id,
+      nombre: this.formAlumnos.value.nombre,
+      apellido: this.formAlumnos.value.apellido,
+      fechaNacimiento: this.formAlumnos.value.fechaNacimiento,
+      email: this.formAlumnos.value.email,
+      matriculaAbierta: this.formAlumnos.value.matriculaAbierta
     }
+    this.alumnoService.modificarAlumno(alumno).subscribe((alumno: Alumnos) => {
+      this.dialogRef.close(alumno);
+    })
   }
 }

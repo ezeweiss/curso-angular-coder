@@ -1,7 +1,7 @@
 <br>
 <p [appTamanio]="'20px'">Administración de cursos</p>
 <br>
-<button mat-raised-button color="primary" (click)="crear()">
+<button mat-raised-button color="primary" (click)="crear()" >
   <mat-icon>add</mat-icon>
 </button>
 <br>
@@ -32,7 +32,7 @@
             <button mat-icon-button (click)="editar(element)">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button (click)="eliminar(element)">
+            <button mat-icon-button (click)="eliminar(element.id)">
                 <mat-icon>delete</mat-icon>
             </button>
         </td>
@@ -43,4 +43,4 @@
   </table>
 
 
-
+ 

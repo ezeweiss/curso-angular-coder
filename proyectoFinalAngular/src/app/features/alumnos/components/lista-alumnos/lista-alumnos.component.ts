@@ -8,6 +8,7 @@ import { AlumnoService } from '../../services/alumno.service';
 import { CrearAlumnosComponent } from '../crear-alumnos/crear-alumnos.component';
 import { DetalleAlumnosComponent } from '../detalle-alumnos/detalle-alumnos.component';
 import { EditarAlumnosComponent } from '../editar-alumnos/editar-alumnos.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-lista-alumnos',
@@ -16,46 +17,49 @@ import { EditarAlumnosComponent } from '../editar-alumnos/editar-alumnos.compone
 })
 export class ListaAlumnosComponent implements OnInit {
   alumnosSubscription!: Subscription;
-  columns: string[] = ['apellido', 'fechaNacimiento','curso', 'comision', 'profesor', 'matriculaAbierta', 'acciones'];
-  dataSource: MatTableDataSource <Alumnos> = new MatTableDataSource([] as Alumnos[]);
+  columns: string[] = ['apellido', 'fechaNacimiento','email','matriculaAbierta', 'acciones'];
+  dataSource: Alumnos[] = [];
   @ViewChild(MatTable) tabla!: MatTable<Alumnos>;
   constructor(
     private dialog: MatDialog,
-    private alumnoService: AlumnoService
+    private alumnoService: AlumnoService,
+    private toastr: ToastrService
   ) { 
   }
 
   ngOnInit(): void {
-    this.alumnosSubscription = this.alumnoService.obtenerAlumnos().subscribe(alumnos => {
-      this.dataSource.data = alumnos;
-    });
+    this.alumnoService.obtenerAlumnos().subscribe(x => {
+      this.dataSource = x;
+    })
+    // this.alumnosSubscription = this.alumnoService.obtenerAlumnos().subscribe(alumnos => {
+    //   this.dataSource.data = alumnos;
+    // });
   }
 
-  ngOnDestroy(): void {
-    this.alumnosSubscription.unsubscribe();
-  }
   crear(){
     const dialogRef = this.dialog.open(CrearAlumnosComponent,{
       width: '300px',
-      data: {inscripcion: 'elemento'}
+      data: "element"
     });
-    dialogRef.afterClosed().subscribe((res: Alumnos) => {
-      if(res){
-      this.alumnoService.agregarAlumno(res);
-      this.tabla.renderRows();
+    dialogRef.afterClosed().subscribe((alumno: Alumnos) => {
+      if(alumno){
+      this.alumnoService.agregarAlumno(alumno);
+      this.toastr.success(`${alumno.id} - ${alumno.apellido , alumno.nombre }, fue agregado exitosamente!`)
+      this.ngOnInit();
       }
     })
   }
 
-  editar(elemento: Alumnos){
-    const dialogRef = this.dialog.open(EditarAlumnosComponent,{
+  editar(alumno: Alumnos){
+    const dialogRef = this.dialog.open(EditarAlumnosComponent, {
       width: '300px',
-      data: elemento
+      data: alumno
     });
 
-    dialogRef.afterClosed().subscribe((res: Alumnos)=>{
+    dialogRef.afterClosed().subscribe((res) => {
       if(res){
-        this.alumnoService.editarAlumno(res);
+        this.toastr.success(`${alumno.id} - ${alumno.apellido, alumno.nombre}, fue editado exitosamente!`)
+        this.ngOnInit();
       }
     })
   }
@@ -67,7 +71,10 @@ export class ListaAlumnosComponent implements OnInit {
     });
   }
 
-  eliminar(elemento: Alumnos){
-    this.alumnoService.eliminarAlumno(elemento);
+  eliminar(id: string){
+    this.alumnoService.eliminarAlumno(id).subscribe((alumno: Alumnos) => {
+    this.toastr.success(`${alumno.id} - ${alumno.apellido, alumno.nombre}, fue eliminado exitosamente!`);
+    this.ngOnInit();
+    });
   }
 }

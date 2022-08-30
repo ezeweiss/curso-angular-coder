@@ -28,7 +28,7 @@ export class CrearInscripcionesComponent implements OnInit {
     curso: new FormControl('', [Validators.required, Validators.minLength(3)]),
     alumno: new FormControl('', [Validators.required, Validators.minLength(3)]),
     })
-  }
+  } 
 
   ngOnInit(): void {
     this.cursos$ = this.cursoService.obtenerCursos();

@@ -12,6 +12,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
     exports:[
@@ -27,7 +28,8 @@ import { MatOptionModule } from "@angular/material/core";
       MatSlideToggleModule,
       MatInputModule,
       MatSelectModule,
-      MatOptionModule
+      MatOptionModule,
+      MatCardModule
     ]
 
 })
