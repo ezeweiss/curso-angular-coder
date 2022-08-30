@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/features/auth/services/auth.service';
+import { Sesion } from 'src/app/models/sesion';
 
 @Component({
   selector: 'app-layout',
@@ -8,9 +12,22 @@ import { Component, OnInit } from '@angular/core';
 export class LayoutComponent implements OnInit {
   opened = true;
   isExpanded: boolean = true;
-  constructor() { }
+
+
+  sesion$!: Observable<Sesion>;
+  
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ){}
 
   ngOnInit(): void {
+    this.sesion$ = this.authService.obtenerSesion();
+  }
+
+  cerrarSesion(){
+    this.authService.cerrarSesion();
+    this.router.navigate(['login']);
   }
 
 }

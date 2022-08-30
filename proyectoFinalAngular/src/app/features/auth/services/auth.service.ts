@@ -59,7 +59,6 @@ export class AuthService {
     
         this.sesionSubject.next(sesion);
 
-        this.router.navigate(['alumnos']);
       }else{
         this.toastr.error("El usuario no existe");
         this.router.navigate(['login']);

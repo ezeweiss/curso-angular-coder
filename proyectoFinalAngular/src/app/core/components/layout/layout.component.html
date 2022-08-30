@@ -3,9 +3,13 @@
     <mat-toolbar color="primary">
       <span [appTamanio]="'20px'">My App</span>
       <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon login-icon" routerLink="/login">
-    <mat-icon>login</mat-icon>
-  </button>
+      <ng-container *ngIf="sesion$ | async as sesion">
+        <div *ngIf="sesion.sesionActiva">
+          <button mat-icon-button class="example-icon login-icon" routerLink="/login">
+            <mat-icon>login</mat-icon>
+          </button>
+        </div>
+    </ng-container>
   </mat-toolbar>
   </div>
   <div class="menu">

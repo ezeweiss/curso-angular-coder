@@ -9,7 +9,7 @@ import { SharedMaterialModule } from '../../shared/shared.material.module';
 
 @NgModule({
   declarations: [
-    LoginComponent
+    
   ],
   imports: [
     CommonModule,

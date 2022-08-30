@@ -9,14 +9,10 @@ import { environment } from '../../../../environments/environment';
 })
 export class CursoService {
   private api: string = environment.api;
-  // cursos: Cursos[];
-  // cursos$: BehaviorSubject<Cursos[]>;
 
   constructor(
     private http: HttpClient
   ) {
-    // this.cursos = ELEMENT_DATA;
-    // this.cursos$ = new BehaviorSubject<Cursos[]>(this.cursos);
   }
 
   obtenerCursos():Observable<Cursos[]>{

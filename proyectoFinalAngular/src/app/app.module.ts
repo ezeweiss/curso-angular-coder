@@ -14,11 +14,13 @@ import { InscripcionesModule } from './features/inscripciones/inscripciones.modu
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthModule } from './features/auth/auth.module';
+import { LoginComponent } from './features/auth/components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent
+    LayoutComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { AuthModule } from './features/auth/auth.module';
     InscripcionesModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    AuthModule
+    
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
