@@ -7,6 +7,7 @@ import { InscripcionService } from './services/inscripcion.service';
 import { EditarInscripcionesComponent } from './components/editar-inscripciones/editar-inscripciones.component';
 import { CrearInscripcionesComponent } from './components/crear-inscripciones/crear-inscripciones.component';
 import { DetalleInscripcionesComponent } from './components/detalle-inscripciones/detalle-inscripciones.component';
+import { InscripcionesRoutingModule } from './inscripciones-routing-module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DetalleInscripcionesComponent } from './components/detalle-inscripcione
     CommonModule,
     SharedMaterialModule,
     SharedModule,
+    InscripcionesRoutingModule
   ],
   providers:[
     InscripcionService

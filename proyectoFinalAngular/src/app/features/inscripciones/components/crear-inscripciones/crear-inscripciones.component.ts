@@ -22,13 +22,13 @@ export class CrearInscripcionesComponent implements OnInit {
     private alumnoService: AlumnoService,
     private cursoService: CursoService,
     private dialogRef: MatDialogRef<CrearInscripcionesComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Inscripciones
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.formInscripciones = fb.group({
-    curso: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    alumno: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    curso: new FormControl(data.inscripciones.curso, [Validators.required, Validators.minLength(3)]),
+    alumno: new FormControl(data.inscripciones.alumno, [Validators.required, Validators.minLength(3)]),
     })
-  }
+  } 
 
   ngOnInit(): void {
     this.cursos$ = this.cursoService.obtenerCursos();
@@ -41,7 +41,11 @@ export class CrearInscripcionesComponent implements OnInit {
   }
 
   guardar(){
-    this.dialogRef.close(this.formInscripciones.value);
+    if (this.formInscripciones.status === "VALID") {
+      this.dialogRef.close({id: this.data.inscripciones.id, ...this.formInscripciones.value});
+    } else {
+      this.formInscripciones.markAllAsTouched();
+    }
   }
   compararId(id1: any, id2: any): boolean {
     return id1.id === id2.id;

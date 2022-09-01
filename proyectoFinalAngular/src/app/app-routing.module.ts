@@ -1,15 +1,35 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListaAlumnosComponent } from './features/alumnos/components/lista-alumnos/lista-alumnos.component';
-import { ListaCursosComponent } from './features/cursos/components/lista-cursos/lista-cursos.component';
-import { ListaInscripcionesComponent } from './features/inscripciones/components/lista-inscripciones/lista-inscripciones.component';
 import { HomeComponent } from './core/components/home/home.component';
+import { AdminGuard } from './core/guards/admin.guard';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent}, 
-  {path: 'alumnos', component: ListaAlumnosComponent},
-  {path: 'cursos', component: ListaCursosComponent},
-  {path: 'inscripciones', component: ListaInscripcionesComponent}
+  {
+    path: '', redirectTo: 'home', pathMatch:'full'
+  },
+  {
+    path:'home',component: HomeComponent
+  },
+  {
+    path:'auth',
+    loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule)
+  },
+  {
+    path: 'alumnos',
+    loadChildren: () => import('./features/alumnos/alumnos.module').then((m) => m.AlumnosModule),
+    canActivate: [AuthGuard, AdminGuard ]
+  },
+  {
+    path: 'cursos',
+    loadChildren: () => import('./features/cursos/cursos.module').then((m) => m.CursosModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'inscripciones',
+    loadChildren: () => import('./features/inscripciones/inscripciones.module').then((m) => m.InscripcionesModule),
+    canActivate: [AuthGuard, AdminGuard]
+  }
 ];
 
 @NgModule({

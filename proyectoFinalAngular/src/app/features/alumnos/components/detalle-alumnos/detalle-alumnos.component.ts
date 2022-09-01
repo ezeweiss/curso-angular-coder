@@ -26,15 +26,13 @@ export class DetalleAlumnosComponent implements OnInit {
       nombre: new FormControl({ value: data.alumno.nombre, disabled: true }),
       apellido: new FormControl( { value: data.alumno.apellido, disabled: true }),
       fechaNacimiento: new FormControl({ value: data.alumno.fechaNacimiento, disabled: true }),
-      curso: new FormControl({ value: data.alumno.curso, disabled: true }),
-      comision: new FormControl( { value: data.alumno.comision, disabled: true }),
-      profesor: new FormControl( { value: data.alumno.profesor, disabled: true }),
+      email: new FormControl({value: data.alumno.email, disabled: true}),
       matriculaAbierta: new FormControl( { value: data.alumno.matriculaAbierta, disabled: true })
     });
   }
 
   ngOnInit(): void {
-    this.inscripciones$ = this.inscripcionService.obtenerInscripcionesPorAlumno(this.alumno);
+     this.inscripcionService.obtenerInscripcionesPorAlumno(this.alumno);
   }
 
   cerrar() {

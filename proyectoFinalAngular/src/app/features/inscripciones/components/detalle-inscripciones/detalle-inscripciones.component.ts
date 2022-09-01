@@ -6,6 +6,7 @@ import { Cursos } from 'src/app/models/cursos';
 import { CursoService } from '../../../cursos/services/curso.service';
 import { AlumnoService } from '../../../alumnos/services/alumno.service';
 import { Alumnos } from 'src/app/models/alumnos';
+import { Inscripciones } from '../../../../models/inscripciones';
 
 @Component({
   selector: 'app-detalle-inscripciones',

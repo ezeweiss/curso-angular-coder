@@ -7,6 +7,9 @@ import { InscripcionService } from '../../services/inscripcion.service';
 import { EditarInscripcionesComponent } from '../editar-inscripciones/editar-inscripciones.component';
 import { CrearInscripcionesComponent } from '../crear-inscripciones/crear-inscripciones.component';
 import { DetalleInscripcionesComponent } from '../detalle-inscripciones/detalle-inscripciones.component';
+import { ToastrService } from 'ngx-toastr';
+import {v4 as uuidv4} from "uuid";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-inscripciones',
@@ -16,14 +19,14 @@ import { DetalleInscripcionesComponent } from '../detalle-inscripciones/detalle-
 export class ListaInscripcionesComponent implements OnInit {
   @ViewChild(MatTable) cursoTabla!: MatTable<Inscripciones>;
   inscripcionesSubscription!: Subscription;
+  dataSource: MatTableDataSource<Inscripciones> = new MatTableDataSource([] as Inscripciones[]);
+  columns: string[] = ['nombreCurso', 'alumno', 'acciones'];
 
   constructor(private dialog: MatDialog,
-              private inscripcionService: InscripcionService) {
-  }
-
-  dataSource: MatTableDataSource<Inscripciones> = new MatTableDataSource([] as Inscripciones[]);
-
-  columns: string[] = ['nombreCurso', 'alumno', 'acciones'];
+              private inscripcionService: InscripcionService,
+              private toastr: ToastrService,
+              private router: Router          
+  ) {}
 
   ngOnInit(): void {
     this.inscripcionesSubscription = this.inscripcionService.obtenerInscripciones().subscribe(inscripciones => {
@@ -36,33 +39,21 @@ export class ListaInscripcionesComponent implements OnInit {
   }
 
   editar(inscripcion: Inscripciones) {
-    const dialogRef = this.dialog.open(EditarInscripcionesComponent, {
-      width: '300px',
-      data: {inscripcion: inscripcion}
-    });
-
-    dialogRef.afterClosed().subscribe((res: Inscripciones) => {
-      if (res) {
-        const item = this.dataSource.data.find(
-          (inscripcion: Inscripciones) => inscripcion.id === res.id
-        );
-        const index = this.dataSource.data.indexOf(item!);
-        this.dataSource.data[index] = res;
-        this.cursoTabla.renderRows();
-      }
-    });
+    this.router.navigate([`inscripciones/editar/${inscripcion.id}`]);
   }
-
+  
   crear() {
     const dialogRef = this.dialog.open(CrearInscripcionesComponent, {
       width: '300px',
-      data: "elemento"
+      data: {inscripciones: {id: uuidv4()}}
     });
 
     dialogRef.afterClosed().subscribe((res: Inscripciones) => {
       if (res) {
-        this.dataSource.data.push(res)
-        this.cursoTabla.renderRows();
+        this.inscripcionService.agregarInscripcion(res).subscribe(res => {
+         this.toastr.success("Agregado con exito");
+         this.cursoTabla.renderRows();
+        });
       }
     });
   }
@@ -80,12 +71,17 @@ export class ListaInscripcionesComponent implements OnInit {
         );
         const index = this.dataSource.data.indexOf(item!);
         this.dataSource.data[index] = res;
+       
         this.cursoTabla.renderRows();
+        this.toastr.success(`${inscripcion.id} - ${inscripcion.curso.nombreCurso} - ${inscripcion.alumno.apellido}, fue editado existosamente!`);
       }
     });
   }
-  eliminar(inscripcion: Inscripciones) {
-    this.inscripcionService.eliminarInscripcion(inscripcion);
+  eliminar(id: string) {
+    this.inscripcionService.eliminarInscripcion(id).subscribe((inscripcion: Inscripciones) => {
+      this.toastr.success(`${inscripcion.id} - ${inscripcion.curso.nombreCurso} - ${inscripcion.alumno.apellido}, fue eliminado existosamente!`);
+      this.ngOnInit();
+      });
   }
 }
 

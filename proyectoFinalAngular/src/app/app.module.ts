@@ -11,11 +11,16 @@ import { AlumnosModule } from './features/alumnos/alumnos.module';
 import { SharedMaterialModule } from './shared/shared.material.module';
 import { CursosModule } from './features/cursos/cursos.module';
 import { InscripcionesModule } from './features/inscripciones/inscripciones.module';
+import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { AuthModule } from './features/auth/auth.module';
+import { LoginComponent } from './features/auth/components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent
+    LayoutComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,10 @@ import { InscripcionesModule } from './features/inscripciones/inscripciones.modu
     FormsModule,
     CursosModule,
     AlumnosModule,
-    InscripcionesModule
+    InscripcionesModule,
+    HttpClientModule,
+    ToastrModule.forRoot()
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

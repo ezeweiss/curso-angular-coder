@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Cursos } from 'src/app/models/cursos';
+import { CursoService } from '../../services/curso.service';
 
 @Component({
   selector: 'app-editar-cursos',
@@ -14,6 +15,7 @@ export class EditarCursosComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditarCursosComponent>,
+    private cursoService: CursoService,
     @Inject(MAT_DIALOG_DATA) public data: Cursos
   ) { 
     this.formCursos = fb.group({
@@ -31,10 +33,14 @@ export class EditarCursosComponent implements OnInit {
   }
 
   actualizar(){
-    if(this.formCursos.status === "VALID"){
-      this.dialogRef.close({id:this.data.id, ...this.formCursos.value});
-    }else{
-      this.formCursos.markAllAsTouched();
+    const curso: Cursos = {
+      id: this.data.id,
+      nombreCurso: this.formCursos.value.nombreCurso,
+      comision: this.formCursos.value.comision,
+      cantidadEstudiantes: this.formCursos.value.cantidadEstudiantes
     }
+    this.cursoService.modificarCurso(curso).subscribe((curso: Cursos) => {
+      this.dialogRef.close(curso);
+    })
   }
 }
