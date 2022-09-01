@@ -12,7 +12,7 @@ const routes: Routes = [
     path:'home',component: HomeComponent
   },
   {
-    path:'login',
+    path:'auth',
     loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule)
   },
   {
