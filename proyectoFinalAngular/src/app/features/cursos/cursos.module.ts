@@ -7,6 +7,7 @@ import { SharedMaterialModule } from 'src/app/shared/shared.material.module';
 import { EditarCursosComponent } from './components/editar-cursos/editar-cursos.component';
 import { CrearCursosComponent } from './components/crear-cursos/crear-cursos.component';
 import { DetalleCursosComponent } from './components/detalle-cursos/detalle-cursos.component';
+import { CursosRoutingModule } from './cursos-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DetalleCursosComponent } from './components/detalle-cursos/detalle-curs
   imports: [
     CommonModule,
     SharedModule,
-    SharedMaterialModule
+    SharedMaterialModule,
+    CursosRoutingModule
   ],
   providers:[
     CursoService

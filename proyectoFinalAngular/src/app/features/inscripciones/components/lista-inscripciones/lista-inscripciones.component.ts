@@ -8,6 +8,8 @@ import { EditarInscripcionesComponent } from '../editar-inscripciones/editar-ins
 import { CrearInscripcionesComponent } from '../crear-inscripciones/crear-inscripciones.component';
 import { DetalleInscripcionesComponent } from '../detalle-inscripciones/detalle-inscripciones.component';
 import { ToastrService } from 'ngx-toastr';
+import {v4 as uuidv4} from "uuid";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-inscripciones',
@@ -17,55 +19,41 @@ import { ToastrService } from 'ngx-toastr';
 export class ListaInscripcionesComponent implements OnInit {
   @ViewChild(MatTable) cursoTabla!: MatTable<Inscripciones>;
   inscripcionesSubscription!: Subscription;
-  dataSource: Inscripciones[] = [];
+  dataSource: MatTableDataSource<Inscripciones> = new MatTableDataSource([] as Inscripciones[]);
   columns: string[] = ['nombreCurso', 'alumno', 'acciones'];
 
   constructor(private dialog: MatDialog,
               private inscripcionService: InscripcionService,
-              private toastr: ToastrService           
+              private toastr: ToastrService,
+              private router: Router          
   ) {}
 
   ngOnInit(): void {
-    this.inscripcionService.obtenerInscripciones().subscribe(x =>{
-      this.dataSource = x;
-      });
-    // this.inscripcionesSubscription = this.inscripcionService.obtenerInscripciones().subscribe(inscripciones => {
-    //   this.dataSource.data = inscripciones;
-    // });
+    this.inscripcionesSubscription = this.inscripcionService.obtenerInscripciones().subscribe(inscripciones => {
+      this.dataSource.data = inscripciones;
+    });
   }
 
-  // ngOnDestroy(): void {
-  //   this.inscripcionesSubscription.unsubscribe();
-  // }
+  ngOnDestroy(): void {
+    this.inscripcionesSubscription.unsubscribe();
+  }
 
   editar(inscripcion: Inscripciones) {
-    const dialogRef = this.dialog.open(EditarInscripcionesComponent, {
-      width: '300px',
-      data: {inscripcion: inscripcion}
-    });
-
-    dialogRef.afterClosed().subscribe((res: Inscripciones) => {
-      if (res) {
-        const item = this.dataSource.find(
-          (inscripcion: Inscripciones) => inscripcion.id === res.id
-        );
-        const index = this.dataSource.indexOf(item!);
-        this.dataSource[index] = res;
-        this.cursoTabla.renderRows();
-      }
-    });
+    this.router.navigate([`inscripciones/editar/${inscripcion.id}`]);
   }
-
+  
   crear() {
     const dialogRef = this.dialog.open(CrearInscripcionesComponent, {
       width: '300px',
-      data: "elemento"
+      data: {inscripciones: {id: uuidv4()}}
     });
 
     dialogRef.afterClosed().subscribe((res: Inscripciones) => {
       if (res) {
-        this.dataSource.push(res)
-        this.cursoTabla.renderRows();
+        this.inscripcionService.agregarInscripcion(res).subscribe(res => {
+         this.toastr.success("Agregado con exito");
+         this.cursoTabla.renderRows();
+        });
       }
     });
   }
@@ -78,11 +66,11 @@ export class ListaInscripcionesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res: Inscripciones) => {
       if (res) {
-        const item = this.dataSource.find(
+        const item = this.dataSource.data.find(
           (inscripcion: Inscripciones) => inscripcion.id === res.id
         );
-        const index = this.dataSource.indexOf(item!);
-        this.dataSource[index] = res;
+        const index = this.dataSource.data.indexOf(item!);
+        this.dataSource.data[index] = res;
        
         this.cursoTabla.renderRows();
         this.toastr.success(`${inscripcion.id} - ${inscripcion.curso.nombreCurso} - ${inscripcion.alumno.apellido}, fue editado existosamente!`);

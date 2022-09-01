@@ -7,6 +7,7 @@ import { CrearAlumnosComponent } from './components/crear-alumnos/crear-alumnos.
 import { AlumnoService } from './services/alumno.service';
 import { SharedMaterialModule } from 'src/app/shared/shared.material.module';
 import { DetalleAlumnosComponent } from './components/detalle-alumnos/detalle-alumnos.component';
+import { AlumnosRoutingModule } from './alumnos-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DetalleAlumnosComponent } from './components/detalle-alumnos/detalle-al
   imports: [
     CommonModule,
     SharedModule,
-    SharedMaterialModule
+    SharedMaterialModule,
+    AlumnosRoutingModule
   ],
   providers: [
     AlumnoService

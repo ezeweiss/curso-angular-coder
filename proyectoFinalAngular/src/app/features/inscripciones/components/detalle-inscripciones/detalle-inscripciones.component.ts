@@ -22,11 +22,11 @@ export class DetalleInscripcionesComponent implements OnInit {
     private dialogRef: MatDialogRef<DetalleInscripcionesComponent>,
     private cursoService: CursoService,
     private alumnoService: AlumnoService,
-    @Inject(MAT_DIALOG_DATA) private inscripciones: any
+    @Inject(MAT_DIALOG_DATA) private data: any
   ) { 
     this.formInscripciones = fb.group({
-      curso: new FormControl({ value: inscripciones.curso, disabled: true }),
-      alumno: new FormControl( { value: inscripciones.alumno, disabled: true })
+      curso: new FormControl({ value: data.inscripciones.curso, disabled: true }),
+      alumno: new FormControl( { value: data.inscripciones.alumno, disabled: true })
     });
   }
 
