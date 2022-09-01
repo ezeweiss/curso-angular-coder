@@ -1,7 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AlumnoService } from 'src/app/features/alumnos/services/alumno.service';
 import { CursoService } from 'src/app/features/cursos/services/curso.service';
@@ -29,6 +28,7 @@ export class EditarInscripcionesComponent implements OnInit {
     private cursoService: CursoService,
     private inscripcionService: InscripcionService,
     private toastr: ToastrService,
+    private router: Router
   ) {
     this.formInscripciones = fb.group({
       curso: new FormControl('', [Validators.required]),
@@ -56,16 +56,13 @@ export class EditarInscripcionesComponent implements OnInit {
     if (this.formInscripciones.status === "VALID") {
       this.inscripcionService.editar({id: this.id, ...this.formInscripciones.value} as Inscripciones)
         .subscribe(result => {
-          this.toastr.success('todo ok')
+          this.toastr.success('Editado correctamente');
+          this.router.navigate(['/inscripciones/lista'])
         });
     } else {
       this.formInscripciones.markAllAsTouched();
     } 
   }
-
-  // cerrar() {
-  //   this.dialogRef.close();
-  // }
 
   compararId(id1: any, id2: any): boolean {
     return id1.id === id2.id;

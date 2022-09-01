@@ -25,6 +25,6 @@ export class AppComponent {
 
   cerrarSesion(){
     this.authService.cerrarSesion();
-    this.router.navigate(['login']);
+    this.router.navigate(['auth/login']);
   }
 }

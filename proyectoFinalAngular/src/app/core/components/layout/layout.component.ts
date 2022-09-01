@@ -27,7 +27,7 @@ export class LayoutComponent implements OnInit {
 
   cerrarSesion(){
     this.authService.cerrarSesion();
-    this.router.navigate(['login']);
+    this.router.navigate(['auth/login']);
   }
 
 }

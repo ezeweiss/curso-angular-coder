@@ -35,8 +35,7 @@ import { LoginComponent } from './features/auth/components/login/login.component
     AlumnosModule,
     InscripcionesModule,
     HttpClientModule,
-    ToastrModule.forRoot(),
-    
+    ToastrModule.forRoot()
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

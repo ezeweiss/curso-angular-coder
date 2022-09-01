@@ -4,17 +4,20 @@ import { LoginComponent } from './components/login/login.component';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthService } from './services/auth.service';
 import { SharedMaterialModule } from '../../shared/shared.material.module';
+import { AuthRoutingModule } from './auth-routing.module';
 
 
 
 @NgModule({
   declarations: [
+
     
   ],
   imports: [
     CommonModule,
     SharedModule,
-    SharedMaterialModule
+    SharedMaterialModule,
+    AuthRoutingModule
   ],
   providers:[
     AuthService

@@ -23,7 +23,7 @@ import { InscripcionesRoutingModule } from './inscripciones-routing-module';
     InscripcionesRoutingModule
   ],
   providers:[
-    
+    InscripcionService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
