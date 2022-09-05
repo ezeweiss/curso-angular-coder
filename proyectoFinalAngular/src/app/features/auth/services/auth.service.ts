@@ -24,9 +24,7 @@ export class AuthService {
     };
     this.sesionSubject = new BehaviorSubject(sesion);
   }
-
   
-
   cerrarSesion(){
     const sesion: Sesion = {
       sesionActiva: false
