@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Crear usuario</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formUsuarios" (ngSubmit)="guardar()">
+        <mat-form-field appearance="fill">
+            <mat-label>Nombre de Usuario</mat-label>
+            <input type="text" formControlName="usuario" matInput>
+            <mat-error>El campo usuario es Obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Contraseña</mat-label>
+            <input formControlName="contrasena" matInput>
+            <mat-error>El campo contraseña es Obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-slide-toggle formControlName="admin">Admin</mat-slide-toggle>
+            <input matInput hidden>
+            <mat-error>El campo admin es Obligatorio</mat-error>
+        </mat-form-field>
+    </form>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="cancelar()">Cancelar</button>
+    <button mat-button [disabled]="formUsuarios.invalid" (click)="guardar()">Guardar</button>
+</div>
+

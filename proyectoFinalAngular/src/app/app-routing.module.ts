@@ -29,7 +29,10 @@ const routes: Routes = [
     path: 'inscripciones',
     loadChildren: () => import('./features/inscripciones/inscripciones.module').then((m) => m.InscripcionesModule),
     canActivate: [AuthGuard, AdminGuard]
-  }
+  },
+  {path: 'usuarios',
+   loadChildren: () => import('./features/usuarios/usuarios.module').then((m) => m.UsuariosModule),
+   canActivate: [AuthGuard, AdminGuard]}
 ];
 
 @NgModule({
