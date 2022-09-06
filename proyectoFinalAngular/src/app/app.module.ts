@@ -13,8 +13,8 @@ import { CursosModule } from './features/cursos/cursos.module';
 import { InscripcionesModule } from './features/inscripciones/inscripciones.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-import { AuthModule } from './features/auth/auth.module';
 import { LoginComponent } from './features/auth/components/login/login.component';
+import { UsuariosModule } from './features/usuarios/usuarios.module';
 
 @NgModule({
   declarations: [
@@ -35,8 +35,8 @@ import { LoginComponent } from './features/auth/components/login/login.component
     AlumnosModule,
     InscripcionesModule,
     HttpClientModule,
-    ToastrModule.forRoot()
-
+    ToastrModule.forRoot(),
+    UsuariosModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

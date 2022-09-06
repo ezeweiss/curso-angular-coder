@@ -29,10 +29,10 @@
             <button mat-icon-button (click)="detalle(element)">
                 <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-icon-button (click)="editar(element)">
+            <button mat-icon-button (click)="editar(element)" *ngIf="sesion?.usuario?.admin">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button (click)="eliminar(element.id)">
+            <button mat-icon-button (click)="eliminar(element.id)" *ngIf="sesion?.usuario?.admin">
                 <mat-icon>delete</mat-icon>
             </button>
         </td>

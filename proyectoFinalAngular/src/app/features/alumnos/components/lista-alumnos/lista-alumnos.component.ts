@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-
 import { Alumnos } from 'src/app/models/alumnos';
 import { AlumnoService } from '../../services/alumno.service';
 import { CrearAlumnosComponent } from '../crear-alumnos/crear-alumnos.component';
 import { DetalleAlumnosComponent } from '../detalle-alumnos/detalle-alumnos.component';
 import { EditarAlumnosComponent } from '../editar-alumnos/editar-alumnos.component';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../../auth/services/auth.service';
+import { Sesion } from 'src/app/models/sesion';
 
 @Component({
   selector: 'app-lista-alumnos',
@@ -17,23 +18,33 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ListaAlumnosComponent implements OnInit {
   alumnosSubscription!: Subscription;
+  sesionSubscription!: Subscription;
+  sesion!: Sesion;
   columns: string[] = ['apellido', 'fechaNacimiento','email','matriculaAbierta', 'acciones'];
   dataSource: Alumnos[] = [];
   @ViewChild(MatTable) tabla!: MatTable<Alumnos>;
   constructor(
     private dialog: MatDialog,
     private alumnoService: AlumnoService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) { 
   }
 
   ngOnInit(): void {
     this.alumnoService.obtenerAlumnos().subscribe(x => {
       this.dataSource = x;
-    })
-    // this.alumnosSubscription = this.alumnoService.obtenerAlumnos().subscribe(alumnos => {
-    //   this.dataSource.data = alumnos;
-    // });
+    });
+    this.sesionSubscription = this.authService.obtenerSesion().subscribe({
+      next: (sesion)=> {
+        this.sesion = sesion;
+      }
+    });
+  }
+
+  ngOnDestroy():void{
+    this.alumnosSubscription.unsubscribe();
+    this.sesionSubscription.unsubscribe();
   }
 
   crear(){

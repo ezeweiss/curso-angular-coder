@@ -1,16 +1,25 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { AppComponent } from './app.component';
+import { AuthService } from './features/auth/services/auth.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule,
+        ToastrModule.forRoot()
       ],
       declarations: [
         AppComponent
       ],
+      providers:[
+        AuthService,
+        ToastrService
+      ]
     }).compileComponents();
   });
 
@@ -20,16 +29,4 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'EntregaFinal1-1PF-Weiss'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('EntregaFinal1-1PF-Weiss');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('EntregaFinal1-1PF-Weiss app is running!');
-  });
 });

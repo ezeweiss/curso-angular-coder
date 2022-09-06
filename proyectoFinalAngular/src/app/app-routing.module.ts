@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: 'alumnos',
     loadChildren: () => import('./features/alumnos/alumnos.module').then((m) => m.AlumnosModule),
-    canActivate: [AuthGuard, AdminGuard ]
+    canActivate: [AuthGuard]
   },
   {
     path: 'cursos',
@@ -28,8 +28,11 @@ const routes: Routes = [
   {
     path: 'inscripciones',
     loadChildren: () => import('./features/inscripciones/inscripciones.module').then((m) => m.InscripcionesModule),
-    canActivate: [AuthGuard, AdminGuard]
-  }
+    canActivate: [AuthGuard]
+  },
+  {path: 'usuarios',
+   loadChildren: () => import('./features/usuarios/usuarios.module').then((m) => m.UsuariosModule),
+   canActivate: [AuthGuard]}
 ];
 
 @NgModule({
