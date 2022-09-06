@@ -8,6 +8,8 @@ import { UsuarioService } from '../../services/usuario.service';
 import { CrearUsuariosComponent } from '../crear-usuarios/crear-usuarios.component';
 import { DetalleUsuariosComponent } from '../detalle-usuarios/detalle-usuarios.component';
 import { EditarUsuariosComponent } from '../editar-usuarios/editar-usuarios.component';
+import { Sesion } from '../../../../models/sesion';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-lista-usuarios',
@@ -15,7 +17,8 @@ import { EditarUsuariosComponent } from '../editar-usuarios/editar-usuarios.comp
   styleUrls: ['./lista-usuarios.component.css']
 })
 export class ListaUsuariosComponent implements OnInit {
-
+  sesionSubscription! : Subscription;
+  sesion!: Sesion;
   alumnosSubscription!: Subscription;
   columns: string[] = ['usuario', 'contrasena','admin','acciones'];
   dataSource: Usuarios[] = [];
@@ -23,14 +26,20 @@ export class ListaUsuariosComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private usuarioService: UsuarioService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) { 
   }
 
   ngOnInit(): void {
     this.usuarioService.obtenerUsuarios().subscribe(x => {
       this.dataSource = x;
-    })
+    });
+    this.sesionSubscription = this.authService.obtenerSesion().subscribe({
+      next: (sesion)=> {
+        this.sesion = sesion;
+      }
+    });
   }
 
   crear(){

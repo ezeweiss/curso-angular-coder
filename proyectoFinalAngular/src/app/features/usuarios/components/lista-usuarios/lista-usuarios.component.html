@@ -9,7 +9,7 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="usuario">
-      <th mat-header-cell *matHeaderCellDef [appTamanio]="'20px'"> </th>
+      <th mat-header-cell *matHeaderCellDef [appTamanio]="'20px'"> Nombre de usuario</th>
       <td mat-cell *matCellDef="let element"> {{element.usuario}}</td>
     </ng-container>
 
@@ -29,10 +29,10 @@
             <button mat-icon-button (click)="detalle(element)">
                 <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-icon-button (click)="editar(element)">
+            <button mat-icon-button (click)="editar(element)"  *ngIf="sesion?.usuario?.admin">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button (click)="eliminar(element.id)">
+            <button mat-icon-button (click)="eliminar(element.id)"  *ngIf="sesion?.usuario?.admin">
                 <mat-icon>delete</mat-icon>
             </button>
         </td>

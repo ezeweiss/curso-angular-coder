@@ -11,8 +11,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   formLogin: FormGroup = new FormGroup({
-    usuario: new FormControl('', [Validators.required]),
-    contrasena: new FormControl('', [Validators.required]),
+    usuario: new FormControl('Verda_Ebert', [Validators.required]),
+    contrasena: new FormControl('1234', [Validators.required]),
     admin: new FormControl(true)
   });
 

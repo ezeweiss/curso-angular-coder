@@ -4,12 +4,13 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Inscripciones } from 'src/app/models/inscripciones';
 import { InscripcionService } from '../../services/inscripcion.service';
-import { EditarInscripcionesComponent } from '../editar-inscripciones/editar-inscripciones.component';
 import { CrearInscripcionesComponent } from '../crear-inscripciones/crear-inscripciones.component';
 import { DetalleInscripcionesComponent } from '../detalle-inscripciones/detalle-inscripciones.component';
 import { ToastrService } from 'ngx-toastr';
 import {v4 as uuidv4} from "uuid";
 import { Router } from '@angular/router';
+import { Sesion } from 'src/app/models/sesion';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-lista-inscripciones',
@@ -18,6 +19,8 @@ import { Router } from '@angular/router';
 })
 export class ListaInscripcionesComponent implements OnInit {
   @ViewChild(MatTable) cursoTabla!: MatTable<Inscripciones>;
+  sesionSubscription!: Subscription;
+  sesion!: Sesion;
   inscripcionesSubscription!: Subscription;
   dataSource: MatTableDataSource<Inscripciones> = new MatTableDataSource([] as Inscripciones[]);
   columns: string[] = ['nombreCurso', 'alumno', 'acciones'];
@@ -25,17 +28,24 @@ export class ListaInscripcionesComponent implements OnInit {
   constructor(private dialog: MatDialog,
               private inscripcionService: InscripcionService,
               private toastr: ToastrService,
-              private router: Router          
+              private router: Router,
+              private authService: AuthService          
   ) {}
 
   ngOnInit(): void {
     this.inscripcionesSubscription = this.inscripcionService.obtenerInscripciones().subscribe(inscripciones => {
       this.dataSource.data = inscripciones;
     });
+    this.sesionSubscription = this.authService.obtenerSesion().subscribe({
+      next: (sesion)=> {
+        this.sesion = sesion;
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.inscripcionesSubscription.unsubscribe();
+    this.sesionSubscription.unsubscribe();
   }
 
   editar(inscripcion: Inscripciones) {

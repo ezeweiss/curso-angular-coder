@@ -1,13 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Cursos } from 'src/app/models/cursos';
 import { CursoService } from '../../services/curso.service';
 import { CrearCursosComponent } from '../crear-cursos/crear-cursos.component';
 import { DetalleCursosComponent } from '../detalle-cursos/detalle-cursos.component';
 import { EditarCursosComponent } from '../editar-cursos/editar-cursos.component';
+import { AuthService } from '../../../auth/services/auth.service';
+import { Sesion } from '../../../../models/sesion';
 
 @Component({
   selector: 'app-lista-cursos',
@@ -15,6 +17,8 @@ import { EditarCursosComponent } from '../editar-cursos/editar-cursos.component'
   styleUrls: ['./lista-cursos.component.css']
 })
 export class ListaCursosComponent implements OnInit {
+  sesionSubscription!: Subscription;
+  sesion!: Sesion;
   cursosSubscription!: Subscription;
   columns: string[] = ['nombreCurso', 'comision','cantidadEstudiantes', 'acciones'];
   dataSource: Cursos[] = [];
@@ -22,7 +26,8 @@ export class ListaCursosComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private cursoService: CursoService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) { 
   }
 
@@ -30,14 +35,18 @@ export class ListaCursosComponent implements OnInit {
    this.cursoService.obtenerCursos().subscribe(x =>{
    this.dataSource = x;
    });
-    // this.cursosSubscription = this.cursoService.obtenerCursos().subscribe(cursos => {
-    //   this.dataSource.data = cursos;
-    // });
+   this.sesionSubscription = this.authService.obtenerSesion().subscribe({
+    next: (sesion)=> {
+      this.sesion = sesion;
+    }
+  });
   }
 
-  // ngOnDestroy(): void {
-  //   this.cursosSubscription.unsubscribe();
-  // }
+  ngOnDestroy(): void {
+    this.cursosSubscription.unsubscribe();
+    this.sesionSubscription.unsubscribe();
+  }
+
   crear(){
     const dialogRef = this.dialog.open(CrearCursosComponent,{
       width: '300px',
