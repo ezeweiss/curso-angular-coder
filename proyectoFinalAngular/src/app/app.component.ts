@@ -10,8 +10,6 @@ import { Sesion } from './models/sesion';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  opened = true;
-  isExpanded: boolean = true;
   sesion$!: Observable<Sesion>;
   
   constructor(

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, mergeMap, Observable, take } from 'rxjs';
 import { Cursos } from 'src/app/models/cursos';
 import { environment } from '../../../../environments/environment';
 
@@ -30,4 +30,5 @@ export class CursoService {
   eliminarCurso(id: string){
     return this.http.delete<Cursos>(`${this.api}/cursos/${id}`)
   }
+
 }

@@ -14,12 +14,36 @@
         </mat-form-field>
 
         <mat-form-field appearance="fill">
-            <mat-label>Cantidad de estudiantes</mat-label>
-            <input type="number" formControlName="cantidadEstudiantes" matInput>
-            <mat-error>El campo cantidad de estudiantes es Obligatorio</mat-error>
+            <mat-label>Fecha de inicio</mat-label>
+            <input type="date" formControlName="fechaInicio" matInput>
+            <mat-error>El campo fecha de inicio es Obligatorio</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill">
+            <mat-label>Fecha de fin</mat-label>
+            <input type="date" formControlName="fechaFin" matInput>
+            <mat-error>El campo fecha de fin es Obligatorio</mat-error>
         </mat-form-field>
 
     </form>
+
+    <div>
+        <div>Lista de alumnos inscriptos</div>
+        <div class="container text-center table-border">
+          <div class="row table-border">
+            <div class="col-6 table-border titles">Nombre del alumno</div>
+            <div class="col-6 table-border titles">Acción</div>
+          </div>
+          <div class="row table-border" *ngFor="let inscripcion of inscripciones$ | async; trackBy: trackById">
+            <div class="col-6 name"> {{ inscripcion.alumno| juntar}}</div>
+            <div class="col-6 table-border-left">
+              <button mat-icon-button (click)="eliminar(inscripcion)" matTooltip="Eliminar" *ngIf="sesion?.usuario?.admin">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
 </div>
 
 <div mat-dialog-actions>

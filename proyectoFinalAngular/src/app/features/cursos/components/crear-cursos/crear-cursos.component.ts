@@ -20,7 +20,8 @@ export class CrearCursosComponent implements OnInit {
     this.formCursos = fb.group({
     nombreCurso: new FormControl('', [Validators.required, Validators.minLength(3)]),
     comision: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    cantidadEstudiantes: new FormControl('', Validators.required)
+    fechaInicio: new FormControl('', Validators.required),
+    fechaFin: new FormControl('', Validators.required)
     })
   }
 
@@ -37,12 +38,12 @@ export class CrearCursosComponent implements OnInit {
       id: '',
       nombreCurso: this.formCursos.value.nombreCurso,
       comision: this.formCursos.value.comision,
-      cantidadEstudiantes: this.formCursos.value.cantidadEstudiantes
+      fechaInicio: this.formCursos.value.fechaInicio,
+      fechaFin: this.formCursos.value.fechaFin
     }
     this.cursoService.agregarCurso(curso).subscribe((curso: Cursos) => {
       this.dialogRef.close(curso);
     })
-    // this.dialogRef.close(this.formCursos.value);
   }
 
 }

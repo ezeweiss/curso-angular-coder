@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -16,8 +16,7 @@ import { Sesion } from 'src/app/models/sesion';
   templateUrl: './lista-alumnos.component.html',
   styleUrls: ['./lista-alumnos.component.css']
 })
-export class ListaAlumnosComponent implements OnInit {
-  alumnosSubscription!: Subscription;
+export class ListaAlumnosComponent implements OnInit, OnDestroy {
   sesionSubscription!: Subscription;
   sesion!: Sesion;
   columns: string[] = ['apellido', 'fechaNacimiento','email','matriculaAbierta', 'acciones'];
@@ -43,7 +42,6 @@ export class ListaAlumnosComponent implements OnInit {
   }
 
   ngOnDestroy():void{
-    this.alumnosSubscription.unsubscribe();
     this.sesionSubscription.unsubscribe();
   }
 

@@ -67,4 +67,9 @@ export class InscripcionService {
     return this.agregarInscripcion(item)
       .pipe(mergeMap(() => this.obtenerInscripciones()), take(1));
   }
+
+  remove(): (item: any) => Observable<any> {
+    return (item: Cursos): Observable<Inscripciones[]> =>
+      this.eliminarInscripcion(item.id).pipe(mergeMap(() => this.obtenerInscripciones()), take(1));
+  }
 }

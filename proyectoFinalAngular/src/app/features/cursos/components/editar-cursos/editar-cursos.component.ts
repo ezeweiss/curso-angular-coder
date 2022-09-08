@@ -21,7 +21,8 @@ export class EditarCursosComponent implements OnInit {
     this.formCursos = fb.group({
       nombreCurso: new FormControl(data.nombreCurso, [Validators.required]),
       comision: new FormControl(data.comision, [Validators.required]), 
-      cantidadEstudiantes: new FormControl(data.cantidadEstudiantes, [Validators.required])
+      fechaInicio: new FormControl(data.fechaInicio, [Validators.required]),
+      fechaFin: new FormControl(data.fechaFin, [Validators.required])
     })
   }
 
@@ -37,7 +38,8 @@ export class EditarCursosComponent implements OnInit {
       id: this.data.id,
       nombreCurso: this.formCursos.value.nombreCurso,
       comision: this.formCursos.value.comision,
-      cantidadEstudiantes: this.formCursos.value.cantidadEstudiantes
+      fechaInicio: this.formCursos.value.fechaInicio,
+      fechaFin: this.formCursos.value.fechaFin
     }
     this.cursoService.modificarCurso(curso).subscribe((curso: Cursos) => {
       this.dialogRef.close(curso);

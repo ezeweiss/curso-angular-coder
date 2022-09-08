@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Cursos } from 'src/app/models/cursos';
@@ -18,10 +18,10 @@ import { Sesion } from '../../../../models/sesion';
 })
 export class ListaCursosComponent implements OnInit {
   sesionSubscription!: Subscription;
+  cursoSubscription!: Subscription;
   sesion!: Sesion;
-  cursosSubscription!: Subscription;
-  columns: string[] = ['nombreCurso', 'comision','cantidadEstudiantes', 'acciones'];
-  dataSource: Cursos[] = [];
+  columns: string[] = ['nombreCurso', 'comision','fechaInicio','fechaFin', 'acciones'];
+  dataSource: MatTableDataSource<Cursos> = new MatTableDataSource([] as Cursos[]);
   @ViewChild(MatTable) tabla!: MatTable<Cursos>;
   constructor(
     private dialog: MatDialog,
@@ -32,9 +32,9 @@ export class ListaCursosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.cursoService.obtenerCursos().subscribe(x =>{
-   this.dataSource = x;
-   });
+    this.cursoSubscription = this.cursoService.obtenerCursos().subscribe(cursos => {
+      this.dataSource.data = cursos;
+    });
    this.sesionSubscription = this.authService.obtenerSesion().subscribe({
     next: (sesion)=> {
       this.sesion = sesion;
@@ -43,7 +43,7 @@ export class ListaCursosComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.cursosSubscription.unsubscribe();
+    this.cursoSubscription.unsubscribe();
     this.sesionSubscription.unsubscribe();
   }
 

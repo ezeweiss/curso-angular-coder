@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { Sesion } from 'src/app/models/sesion';
 
@@ -10,10 +10,10 @@ import { Sesion } from 'src/app/models/sesion';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent implements OnInit {
+  sesion!: Sesion;
+  sesionSubscription!: Subscription;
   opened = true;
   isExpanded: boolean = true;
-
-
   sesion$!: Observable<Sesion>;
   
   constructor(
@@ -23,6 +23,11 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.sesion$ = this.authService.obtenerSesion();
+    this.sesionSubscription = this.authService.obtenerSesion().subscribe({
+      next: (sesion)=> {
+        this.sesion = sesion;
+      }
+    });
   }
 
   cerrarSesion(){
