@@ -21,7 +21,6 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { HeaderComponent } from './core/components/header/header.component';
 import { ROOT_REDUCERS } from './core/state/app.state';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [

@@ -1,5 +1,5 @@
 import { Usuarios } from './usuarios';
 export interface UsuariosState {
-    loading: boolean;
+    cargando: boolean;
     usuarios: Usuarios[];
   }

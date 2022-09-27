@@ -9,6 +9,11 @@ import { CrearInscripcionesComponent } from './components/crear-inscripciones/cr
 import { DetalleInscripcionesComponent } from './components/detalle-inscripciones/detalle-inscripciones.component';
 import { InscripcionesRoutingModule } from './inscripciones-routing-module';
 
+import * as fromInscripciones from '../../core/state/reducers/inscripciones.reducer';
+import { InscripcionesEffects } from 'src/app/core/state/effects/inscripciones.effect';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+
 @NgModule({
   declarations: [
     ListaInscripcionesComponent,
@@ -20,7 +25,9 @@ import { InscripcionesRoutingModule } from './inscripciones-routing-module';
     CommonModule,
     SharedMaterialModule,
     SharedModule,
-    InscripcionesRoutingModule
+    InscripcionesRoutingModule,
+    StoreModule.forFeature(fromInscripciones.inscripcionesFeatureKey, fromInscripciones.inscripcionReducer),
+    EffectsModule.forFeature([InscripcionesEffects])
   ],
   providers:[
     InscripcionService

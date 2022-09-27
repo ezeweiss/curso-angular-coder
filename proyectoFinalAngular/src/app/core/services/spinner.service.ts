@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { SpinnerModalComponent } from '../components/spinner/spinner-modal.component';
+import { SpinnerComponent } from '../components/spinner/spinner.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpinnerService {
   cargando = false;
-  dialogRef!: MatDialogRef<SpinnerModalComponent, any>;
+  dialogRef!: MatDialogRef<SpinnerComponent, any>;
   constructor(private dialog: MatDialog) { }
 
   cargandoTrue(){
@@ -16,7 +16,7 @@ export class SpinnerService {
     }
     this.cargando = true;
 
-    this.dialogRef = this.dialog.open(SpinnerModalComponent, {
+    this.dialogRef = this.dialog.open(SpinnerComponent, {
       width: '140px',
       panelClass: 'custom-dialog-container'
     });

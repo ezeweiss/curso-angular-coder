@@ -5,14 +5,16 @@ import { AlumnosModule } from '../features/alumnos/alumnos.module';
 import { SharedModule } from '../shared/shared.module';
 import { CursosModule } from '../features/cursos/cursos.module';
 import { HomeComponent } from './components/home/home.component';
-import { SpinnerModalComponent } from './components/spinner/spinner-modal.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+import { SharedMaterialModule } from '../shared/shared.material.module';
+import { SpinnerComponent } from './components/spinner/spinner.component';
  
 
 @NgModule({
   declarations: [
     HomeComponent,
-    SpinnerModalComponent,
+    SpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     SharedModule,
     AlumnosModule,
     CursosModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    FormsModule,
+    SharedMaterialModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

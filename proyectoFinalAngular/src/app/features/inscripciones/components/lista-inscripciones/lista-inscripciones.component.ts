@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Inscripciones } from 'src/app/models/inscripciones';
 import { InscripcionService } from '../../services/inscripcion.service';
 import { CrearInscripcionesComponent } from '../crear-inscripciones/crear-inscripciones.component';
@@ -11,17 +11,24 @@ import {v4 as uuidv4} from "uuid";
 import { Router } from '@angular/router';
 import { Sesion } from 'src/app/models/sesion';
 import { AuthService } from '../../../auth/services/auth.service';
+import { HeaderService } from 'src/app/core/services/header.service';
+import { InscripcionesState } from 'src/app/models/inscripciones.state';
+import { Store } from '@ngrx/store';
+import { cargarInscripciones } from 'src/app/core/state/actions/inscripciones.action';
+import { cargandoInscripcionesSelector } from 'src/app/core/state/selectors/inscripciones.selector';
+import { SpinnerService } from 'src/app/core/services/spinner.service';
 
 @Component({
   selector: 'app-lista-inscripciones',
   templateUrl: './lista-inscripciones.component.html',
   styleUrls: ['./lista-inscripciones.component.css']
 })
-export class ListaInscripcionesComponent implements OnInit {
+export class ListaInscripcionesComponent implements OnInit, OnDestroy {
   @ViewChild(MatTable) cursoTabla!: MatTable<Inscripciones>;
   sesionSubscription!: Subscription;
   sesion!: Sesion;
   inscripcionesSubscription!: Subscription;
+  loading$!: Observable<boolean>;
   dataSource: MatTableDataSource<Inscripciones> = new MatTableDataSource([] as Inscripciones[]);
   columns: string[] = ['nombreCurso', 'alumno', 'acciones'];
 
@@ -29,10 +36,16 @@ export class ListaInscripcionesComponent implements OnInit {
               private inscripcionService: InscripcionService,
               private toastr: ToastrService,
               private router: Router,
-              private authService: AuthService          
+              private authService: AuthService,
+              private headerService: HeaderService,
+              private store: Store<InscripcionesState>,
+              private spinnerService: SpinnerService      
   ) {}
 
   ngOnInit(): void {
+    this.headerService.setTitulo("Inscripciones");
+    this.store.dispatch(cargarInscripciones());
+
     this.inscripcionesSubscription = this.inscripcionService.obtenerInscripciones().subscribe(inscripciones => {
       this.dataSource.data = inscripciones;
     });
@@ -41,9 +54,19 @@ export class ListaInscripcionesComponent implements OnInit {
         this.sesion = sesion;
       }
     });
+
+    this.loading$ = this.store.select(cargandoInscripcionesSelector);
+    this.loading$.subscribe(result => {
+      if(result){
+        this.spinnerService.cargandoTrue();
+      }else{
+        this.spinnerService.cargandoFalse();
+      }
+    })
   }
 
   ngOnDestroy(): void {
+    this.headerService.setTitulo("");
     this.inscripcionesSubscription.unsubscribe();
     this.sesionSubscription.unsubscribe();
   }

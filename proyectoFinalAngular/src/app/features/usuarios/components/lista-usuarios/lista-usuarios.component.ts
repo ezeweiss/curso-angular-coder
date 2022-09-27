@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Usuarios } from 'src/app/models/usuarios';
 import { UsuarioService } from '../../services/usuario.service';
 import { CrearUsuariosComponent } from '../crear-usuarios/crear-usuarios.component';
@@ -10,6 +10,12 @@ import { DetalleUsuariosComponent } from '../detalle-usuarios/detalle-usuarios.c
 import { EditarUsuariosComponent } from '../editar-usuarios/editar-usuarios.component';
 import { Sesion } from '../../../../models/sesion';
 import { AuthService } from '../../../auth/services/auth.service';
+import { HeaderService } from 'src/app/core/services/header.service';
+import { UsuariosState } from 'src/app/models/usuarios.state';
+import { Store } from '@ngrx/store';
+import { cargarUsuarios } from 'src/app/core/state/actions/usuarios.action';
+import { SpinnerService } from 'src/app/core/services/spinner.service';
+import { cargandoUsuariosSelector } from 'src/app/core/state/selectors/usuarios.selector';
 
 @Component({
   selector: 'app-lista-usuarios',
@@ -20,6 +26,7 @@ export class ListaUsuariosComponent implements OnInit {
   sesionSubscription! : Subscription;
   sesion!: Sesion;
   alumnosSubscription!: Subscription;
+  loading$!: Observable<boolean>;
   columns: string[] = ['usuario', 'contrasena','admin','acciones'];
   dataSource: Usuarios[] = [];
   @ViewChild(MatTable) tabla!: MatTable<Usuarios>;
@@ -27,11 +34,17 @@ export class ListaUsuariosComponent implements OnInit {
     private dialog: MatDialog,
     private usuarioService: UsuarioService,
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private headerService: HeaderService,
+    private store: Store<UsuariosState>,
+    private spinnerService: SpinnerService
   ) { 
   }
 
   ngOnInit(): void {
+    this.store.dispatch(cargarUsuarios());
+
+    this.headerService.setTitulo("Usuarios");
     this.usuarioService.obtenerUsuarios().subscribe(x => {
       this.dataSource = x;
     });
@@ -40,6 +53,14 @@ export class ListaUsuariosComponent implements OnInit {
         this.sesion = sesion;
       }
     });
+    this.loading$ = this.store.select(cargandoUsuariosSelector);
+    this.loading$.subscribe(result => {
+      if(result){
+        this.spinnerService.cargandoTrue();
+      }else{
+        this.spinnerService.cargandoFalse();
+      }
+    })
   }
 
   crear(){

@@ -6,6 +6,11 @@ import { Sesion } from 'src/app/models/sesion';
 import { Usuarios } from 'src/app/models/usuarios';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { SpinnerService } from 'src/app/core/services/spinner.service';
+import { UsuarioService } from '../../usuarios/services/usuario.service';
+import { SesionState } from 'src/app/models/sesion.state';
+import { Store } from '@ngrx/store';
+import { crearSesion } from 'src/app/core/state/actions/sesion.action';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +22,10 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinnerService: SpinnerService,
+    private usuarioService: UsuarioService,
+    private store: Store<SesionState>
   ) {
     const sesion: Sesion = {
       sesionActiva: false
@@ -35,6 +43,8 @@ export class AuthService {
   obtenerSesion(){
     return this.sesionSubject.asObservable();
   }
+
+
 
   iniciarSesion(usuario: Usuarios){
     this.http.get<Usuarios[]>(`${this.api}/usuarios`).pipe(
