@@ -23,6 +23,10 @@ export class CursoService {
     return this.http.post<Cursos>(`${this.api}/cursos`, curso);
   }
   
+  fetchCursos() {
+    return this.http.get<Cursos[]>(`${this.api}/cursos`);
+  }
+
   modificarCurso(curso: Cursos){
     return this.http.put<Cursos>(`${this.api}/cursos/${curso.id}`, curso);
   }

@@ -21,6 +21,10 @@ export class AlumnoService {
     return this.http.get<Alumnos[]>(`${this.api}/alumnos`);
   }
 
+  fetchAlumnos() {
+    return this.http.get<Alumnos[]>(`${this.api}/alumnos`);
+  }
+
   agregarAlumno(alumno: Alumnos) {
     return this.http.post<Alumnos>(`${this.api}/alumnos`, alumno);
   }

@@ -8,6 +8,10 @@ import { EditarCursosComponent } from './components/editar-cursos/editar-cursos.
 import { CrearCursosComponent } from './components/crear-cursos/crear-cursos.component';
 import { DetalleCursosComponent } from './components/detalle-cursos/detalle-cursos.component';
 import { CursosRoutingModule } from './cursos-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import * as fromCursos from '../../core/state/reducers/cursos.reducer';
+import { CursosEffects } from 'src/app/core/state/effects/cursos.effect';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,9 @@ import { CursosRoutingModule } from './cursos-routing.module';
     CommonModule,
     SharedModule,
     SharedMaterialModule,
-    CursosRoutingModule
+    CursosRoutingModule,
+    StoreModule.forFeature(fromCursos.cursosFeatureKey, fromCursos.cursosReducer),
+    EffectsModule.forFeature([CursosEffects])
   ],
   providers:[
     CursoService

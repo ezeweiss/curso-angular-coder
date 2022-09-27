@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { map, Observable, of, Subscription } from 'rxjs';
 import { Cursos } from 'src/app/models/cursos';
 import { CursoService } from '../../services/curso.service';
 import { CrearCursosComponent } from '../crear-cursos/crear-cursos.component';
@@ -10,40 +10,64 @@ import { DetalleCursosComponent } from '../detalle-cursos/detalle-cursos.compone
 import { EditarCursosComponent } from '../editar-cursos/editar-cursos.component';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Sesion } from '../../../../models/sesion';
+import { CursosState } from 'src/app/models/cursos.state';
+import { Store } from '@ngrx/store';
+import { cargarCursos } from 'src/app/core/state/actions/cursos.action';
+import { cargandoCursosSelector, cursosCargadosSelector } from 'src/app/core/state/selectors/cursos.selector';
+import { HeaderService } from 'src/app/core/services/header.service';
+import { SpinnerService } from '../../../../core/services/spinner.service';
 
 @Component({
   selector: 'app-lista-cursos',
   templateUrl: './lista-cursos.component.html',
   styleUrls: ['./lista-cursos.component.css']
 })
-export class ListaCursosComponent implements OnInit {
+export class ListaCursosComponent implements OnInit, OnDestroy {
   sesionSubscription!: Subscription;
-  cursoSubscription!: Subscription;
   sesion!: Sesion;
+  loading$!: Observable<boolean>;
+  cursos$!: Observable<Cursos[]>;
   columns: string[] = ['nombreCurso', 'comision','fechaInicio','fechaFin', 'acciones'];
-  dataSource: MatTableDataSource<Cursos> = new MatTableDataSource([] as Cursos[]);
+  dataSource$: Observable<MatTableDataSource<Cursos>> =of (new MatTableDataSource([] as Cursos[]));
   @ViewChild(MatTable) tabla!: MatTable<Cursos>;
   constructor(
     private dialog: MatDialog,
     private cursoService: CursoService,
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<CursosState>,
+    private headerService: HeaderService,
+    private spinnerService: SpinnerService
   ) { 
   }
 
   ngOnInit(): void {
-    this.cursoSubscription = this.cursoService.obtenerCursos().subscribe(cursos => {
-      this.dataSource.data = cursos;
+    this.headerService.setTitulo("Cursos");
+    this.store.dispatch(cargarCursos());
+    
+    this.dataSource$ = this.store.select(cursosCargadosSelector).pipe(
+      map((result) => {
+        return new MatTableDataSource(
+          result
+        )
+      }));
+    this.sesionSubscription = this.authService.obtenerSesion().subscribe({
+      next: (sesion) => {
+        this.sesion = sesion;
+      }
     });
-   this.sesionSubscription = this.authService.obtenerSesion().subscribe({
-    next: (sesion)=> {
-      this.sesion = sesion;
-    }
-  });
+    this.loading$ = this.store.select(cargandoCursosSelector);
+    this.loading$.subscribe(result => {
+      if(result){
+        this.spinnerService.cargandoTrue();
+      }else{
+        this.spinnerService.cargandoFalse();
+      }
+    })
   }
 
   ngOnDestroy(): void {
-    this.cursoSubscription.unsubscribe();
+    this.headerService.setTitulo("");
     this.sesionSubscription.unsubscribe();
   }
 

@@ -8,6 +8,10 @@ import { AlumnoService } from './services/alumno.service';
 import { SharedMaterialModule } from 'src/app/shared/shared.material.module';
 import { DetalleAlumnosComponent } from './components/detalle-alumnos/detalle-alumnos.component';
 import { AlumnosRoutingModule } from './alumnos-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import * as fromAlumnos from '../../core/state/reducers/alumnos.reducer';
+import { AlumnosEffect } from '../../core/state/effects/alumnos.effect';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,9 @@ import { AlumnosRoutingModule } from './alumnos-routing.module';
     CommonModule,
     SharedModule,
     SharedMaterialModule,
-    AlumnosRoutingModule
+    AlumnosRoutingModule,
+    StoreModule.forFeature(fromAlumnos.alumnosFeatureKey, fromAlumnos.alumnosReducer),
+    EffectsModule.forFeature([AlumnosEffect])
   ],
   providers: [
     AlumnoService

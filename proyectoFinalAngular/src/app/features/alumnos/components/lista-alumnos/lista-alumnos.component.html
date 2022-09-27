@@ -6,6 +6,7 @@
 </button>
 <br>
 <br>
+<ng-container *ngIf="dataSource$ | async as dataSource">
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="apellido">
@@ -47,4 +48,4 @@
     <tr mat-row *matRowDef="let row; columns: columns;"></tr>
   </table>
 
-
+</ng-container>
