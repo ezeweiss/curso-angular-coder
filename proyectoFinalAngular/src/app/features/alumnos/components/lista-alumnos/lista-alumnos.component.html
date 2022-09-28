@@ -1,7 +1,7 @@
 <br>
 <p [appTamanio]="'20px'">Administración de alumnos</p>
 <br>
-<button mat-raised-button color="primary" (click)="crear()">
+<button mat-raised-button color="primary" (click)="crear()" *ngIf="sesion?.usuario?.admin">
   <mat-icon>add</mat-icon>
 </button>
 <br>
