@@ -4,7 +4,6 @@ import { JuntarPipe } from './pipes/juntar.pipe';
 import { TamanioDirective } from './directives/tamanio.directive';
 import { SharedMaterialModule } from './shared.material.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     JuntarPipe,
     TamanioDirective,
     SharedMaterialModule,
-    ReactiveFormsModule,
-    NgxSpinnerModule
+    ReactiveFormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

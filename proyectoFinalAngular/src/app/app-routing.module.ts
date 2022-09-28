@@ -6,33 +6,44 @@ import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: 'home', pathMatch:'full'
+    path: '', redirectTo:  'login', pathMatch:'full'
   },
   {
-    path:'home',component: HomeComponent
+    path: 'core',
+    loadChildren: () => import('./core/core.module').then((m) => m.CoreModule)
   },
   {
-    path:'auth',
+    path: 'login',
     loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule)
   },
-  {
-    path: 'alumnos',
-    loadChildren: () => import('./features/alumnos/alumnos.module').then((m) => m.AlumnosModule),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'cursos',
-    loadChildren: () => import('./features/cursos/cursos.module').then((m) => m.CursosModule),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'inscripciones',
-    loadChildren: () => import('./features/inscripciones/inscripciones.module').then((m) => m.InscripcionesModule),
-    canActivate: [AuthGuard]
-  },
-  {path: 'usuarios',
-   loadChildren: () => import('./features/usuarios/usuarios.module').then((m) => m.UsuariosModule),
-   canActivate: [AuthGuard]}
+  // {
+  //   path: '', redirectTo: 'login', pathMatch:'full'
+  // },
+  // {
+  //   path:'home',component: HomeComponent
+  // },
+  // {
+  //   path:'auth',
+  //   loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule)
+  // },
+  // {
+  //   path: 'alumnos',
+  //   loadChildren: () => import('./features/alumnos/alumnos.module').then((m) => m.AlumnosModule),
+  //   canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'cursos',
+  //   loadChildren: () => import('./features/cursos/cursos.module').then((m) => m.CursosModule),
+  //   canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'inscripciones',
+  //   loadChildren: () => import('./features/inscripciones/inscripciones.module').then((m) => m.InscripcionesModule),
+  //   canActivate: [AuthGuard]
+  // },
+  // {path: 'usuarios',
+  //  loadChildren: () => import('./features/usuarios/usuarios.module').then((m) => m.UsuariosModule),
+  //  canActivate: [AuthGuard]}
 ];
 
 @NgModule({

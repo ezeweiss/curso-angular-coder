@@ -32,7 +32,7 @@ export class LayoutComponent implements OnInit {
 
   cerrarSesion(){
     this.authService.cerrarSesion();
-    this.router.navigate(['auth/login']);
+    this.router.navigate(['login']);
   }
 
 }

@@ -25,9 +25,9 @@ import { ROOT_REDUCERS } from './core/state/app.state';
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent,
-    LoginComponent,
-    HeaderComponent
+    // LayoutComponent,
+    // LoginComponent,
+    // HeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -9,12 +9,16 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { SharedMaterialModule } from '../shared/shared.material.module';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { HeaderComponent } from './components/header/header.component';
  
 
 @NgModule({
   declarations: [
     HomeComponent,
     SpinnerComponent,
+    LayoutComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,
