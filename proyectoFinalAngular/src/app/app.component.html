@@ -1,10 +1,1 @@
-<ng-container *ngIf="sesion$ | async as sesion">
-    <div *ngIf="sesion.sesionActiva == false">
-        <app-login></app-login>
-    </div>
-</ng-container>
-<ng-container *ngIf="sesion$ | async as sesion">
-    <div *ngIf="sesion.sesionActiva == true">
-        <app-layout></app-layout>
-    </div>
-</ng-container>
+<router-outlet></router-outlet>

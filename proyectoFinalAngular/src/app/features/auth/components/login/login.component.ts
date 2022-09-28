@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Usuarios } from 'src/app/models/usuarios';
 import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   formLogin: FormGroup = new FormGroup({
     usuario: new FormControl('Verda_Ebert', [Validators.required]),
     contrasena: new FormControl('1234', [Validators.required]),
-    admin: new FormControl(true)
+    // admin: new FormControl(true)
   });
 
   constructor(
@@ -25,15 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    const usuario: Usuarios = {
-      usuario: this.formLogin.value.usuario,
-      contrasena: this.formLogin.value.contrasena,
-      admin: this.formLogin.value.admin,
-      id: '1'
-    }
-
-    this.authService.iniciarSesion(usuario);
-    this.router.navigate(['home']);
+    this.authService.iniciarSesion(this.formLogin.value.usuario,this.formLogin.value.contrasena);
   }
 }
 

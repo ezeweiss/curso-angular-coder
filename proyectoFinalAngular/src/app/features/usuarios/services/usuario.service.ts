@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Usuarios } from 'src/app/models/usuarios';
 import { environment } from 'src/environments/environment';
 
@@ -12,6 +12,19 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
+
+  login(usuario: string, contrasena: string) {
+    return this.fetchUsuarios().pipe(map((usuarios: Usuarios[])=> {
+      return usuarios.filter(
+        usuarios => usuarios.usuario === usuario && usuarios.contrasena ===contrasena
+      )[0]
+    }));
+  }
+
+  fetchUsuarios(){
+    return this.http.get<Usuarios[]>(`${this.api}/usuarios`);
+  }
+  
   obtenerUsuarios():Observable<Usuarios[]>{
     return this.http.get<Usuarios[]>(`${this.api}/usuarios`);
   }

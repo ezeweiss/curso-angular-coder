@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTable } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { map, Observable, of, Subscription } from 'rxjs';
 import { Alumnos } from 'src/app/models/alumnos';
 import { AlumnoService } from '../../services/alumno.service';
 import { CrearAlumnosComponent } from '../crear-alumnos/crear-alumnos.component';
@@ -10,6 +10,12 @@ import { EditarAlumnosComponent } from '../editar-alumnos/editar-alumnos.compone
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Sesion } from 'src/app/models/sesion';
+import { AlumnosState } from '../../../../models/alumnos.state';
+import { Store } from '@ngrx/store';
+import { cargarAlumnos } from '../../../../core/state/actions/alumnos.action';
+import { cargandoAlumnosSelector } from '../../../../core/state/selectors/alumnos.selector';
+import { HeaderService } from '../../../../core/services/header.service';
+import { SpinnerService } from 'src/app/core/services/spinner.service';
 
 @Component({
   selector: 'app-lista-alumnos',
@@ -20,28 +26,48 @@ export class ListaAlumnosComponent implements OnInit, OnDestroy {
   sesionSubscription!: Subscription;
   sesion!: Sesion;
   columns: string[] = ['apellido', 'fechaNacimiento','email','matriculaAbierta', 'acciones'];
-  dataSource: Alumnos[] = [];
+  dataSource$: Observable<MatTableDataSource<Alumnos>> = of(new MatTableDataSource(
+    [] as Alumnos[]
+  ));
   @ViewChild(MatTable) tabla!: MatTable<Alumnos>;
   constructor(
     private dialog: MatDialog,
     private alumnoService: AlumnoService,
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<AlumnosState>,
+    private headerService: HeaderService,
+    private spinnerService: SpinnerService
   ) { 
   }
 
   ngOnInit(): void {
-    this.alumnoService.obtenerAlumnos().subscribe(x => {
-      this.dataSource = x;
-    });
+    this.headerService.setTitulo("Alumnos");
+    this.store.dispatch(cargarAlumnos());
+
+    this.dataSource$ = this.alumnoService.obtenerAlumnos().pipe(
+      map((result) => {
+        return new MatTableDataSource(
+          result
+        )
+      }));
+
+      this.store.select(cargandoAlumnosSelector).subscribe(result => {
+      if (result) {
+        this.spinnerService.cargandoTrue();
+      } else {
+        this.spinnerService.cargandoFalse();
+      }
+    })
     this.sesionSubscription = this.authService.obtenerSesion().subscribe({
-      next: (sesion)=> {
+      next: (sesion) => {
         this.sesion = sesion;
       }
     });
   }
 
   ngOnDestroy():void{
+    this.headerService.setTitulo("");
     this.sesionSubscription.unsubscribe();
   }
 

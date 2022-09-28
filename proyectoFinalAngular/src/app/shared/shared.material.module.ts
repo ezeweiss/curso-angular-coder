@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
@@ -13,8 +13,26 @@ import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import {MatCardModule} from '@angular/material/card';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
+    imports: [
+      MatToolbarModule,
+      MatSidenavModule,
+      MatIconModule,
+      MatButtonModule,
+      MatTableModule,
+      MatMenuModule,
+      MatListModule,
+      MatDialogModule,
+      MatFormFieldModule,
+      MatSlideToggleModule, 
+      MatInputModule,
+      MatSelectModule,
+      MatOptionModule,
+      MatCardModule,
+      MatProgressSpinnerModule
+    ],
     exports:[
       MatToolbarModule,
       MatSidenavModule,
@@ -25,12 +43,14 @@ import {MatCardModule} from '@angular/material/card';
       MatListModule,
       MatDialogModule,
       MatFormFieldModule,
-      MatSlideToggleModule,
+      MatSlideToggleModule, 
       MatInputModule,
       MatSelectModule,
       MatOptionModule,
-      MatCardModule
-    ]
+      MatCardModule,
+      MatProgressSpinnerModule
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
 export class SharedMaterialModule{}

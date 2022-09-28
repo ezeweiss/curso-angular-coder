@@ -23,7 +23,7 @@ export class InscripcionService {
  buscarInscripciones(): Observable<Inscripciones[]>{
     return this.http.get<Inscripciones[]>(`${this.api}/inscripciones`);
   }
-
+  
   obtenerInscripcionPorId(id: string) {
     return this.http.get<Inscripciones>(`${this.api}/inscripciones/${id}`);
   }

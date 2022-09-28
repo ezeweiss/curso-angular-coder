@@ -15,12 +15,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './features/auth/components/login/login.component';
 import { UsuariosModule } from './features/usuarios/usuarios.module';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { HeaderComponent } from './core/components/header/header.component';
+import { ROOT_REDUCERS } from './core/state/app.state';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent,
-    LoginComponent
+    // LayoutComponent,
+    // LoginComponent,
+    // HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +43,10 @@ import { UsuariosModule } from './features/usuarios/usuarios.module';
     InscripcionesModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    UsuariosModule
+    UsuariosModule,
+    StoreModule.forRoot(ROOT_REDUCERS),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production, name: 'prueba ngrx' }),
+    EffectsModule.forRoot([])
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

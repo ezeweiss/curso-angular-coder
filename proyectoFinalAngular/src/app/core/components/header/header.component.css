@@ -1,0 +1,11 @@
+.toolbar{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .userName{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
