@@ -5,23 +5,23 @@
   <div class="menu">
     <div class="contenedorMenu">
       <div>
-        <button mat-button class="botonMenu" routerLink="/core">
+        <button mat-button class="botonMenu" routerLink="/home">
           <mat-icon>home</mat-icon>
           <span class="tituloBoton">Inicio</span>
         </button>
-        <button mat-button class="botonMenu" routerLink="/core/alumnos/lista">
+        <button mat-button class="botonMenu" routerLink="/alumnos/lista">
           <mat-icon>group</mat-icon>
           <span class="tituloBoton">Alumnos</span>
         </button>
-        <button mat-button class="botonMenu" routerLink="/core/cursos/lista">
+        <button mat-button class="botonMenu" routerLink="/cursos/lista">
           <mat-icon>school</mat-icon>
           <span class="tituloBoton">Cursos</span>
         </button>
-        <button mat-button class="botonMenu" routerLink="/core/inscripciones/lista">
+        <button mat-button class="botonMenu" routerLink="/inscripciones/lista">
           <mat-icon>important_devices</mat-icon>
           <span class="tituloBoton">Inscripciones</span>
         </button>
-        <button mat-button class="botonMenu" routerLink="/core/usuarios/lista" *ngIf="sesion?.usuario?.admin">
+        <button mat-button class="botonMenu" routerLink="/usuarios/lista" *ngIf="sesion?.usuario?.admin">
           <mat-icon>person</mat-icon>
           <span class="tituloBoton">Usuarios</span>
         </button>

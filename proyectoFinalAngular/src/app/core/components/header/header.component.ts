@@ -10,7 +10,7 @@ import { HeaderService } from '../../services/header.service';
 })
 export class HeaderComponent implements OnInit {
 
-  usuario = '';
+  userName = '';
   titulo$!: Observable<string>;
 
   constructor(private authService: AuthService,
@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     this.authService.obtenerSesion().subscribe({
       next: (sesion) => {
         if (sesion.usuario) {
-          this.usuario = sesion.usuario.usuario;
+          this.userName = sesion.usuario.usuario;
         }
       }
     });

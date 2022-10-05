@@ -37,38 +37,43 @@ export class AuthService {
     const sesion: Sesion = {
       sesionActiva: false
     };
-    sessionStorage.setItem("sesion",JSON.stringify(sesion));
+    this.sesionSubject.next(sesion);
   }
 
   obtenerSesion(){
     return this.sesionSubject.asObservable();
   }
 
-  iniciarSesion(usuario: string, contrasena: string) {
-    this.spinnerService.cargandoTrue();
-    this.usuarioService.login(usuario,contrasena).pipe(
-      catchError(this.manejarError)
-    ).subscribe((matchedUser: Usuarios) => {
-      this.spinnerService.cargandoFalse();
 
-      if (matchedUser) {
+
+  iniciarSesion(usuario: Usuarios){
+    this.http.get<Usuarios[]>(`${this.api}/usuarios`).pipe(
+      map((usuarios: Usuarios[]) => {
+        return usuarios.filter((u: Usuarios) => u.usuario === usuario.usuario && u.contrasena === usuario.contrasena)[0];
+      })
+    ).pipe(
+      catchError(this.manejarError)
+    ).subscribe((usuario: Usuarios) => {
+      if(usuario){
         const sesion: Sesion = {
           sesionActiva: true,
           usuario: {
-            ...matchedUser
+            id: usuario.id,
+            usuario: usuario.usuario,
+            contrasena: usuario.contrasena,
+            admin: usuario.admin
           }
         }
-        sessionStorage.setItem("sesion",JSON.stringify(sesion));
-        this.store.dispatch(crearSesion({usuario:matchedUser}))
-        this.router.navigate(['core']);
+    
+        this.sesionSubject.next(sesion);
 
-      } else {
-        this.toastr.error('Credenciales inválidas');
-        this.router.navigate(['login']);
+      }else{
+        this.toastr.error("El usuario no existe");
+        this.router.navigate(['auth/login']);
       }
     });
   }
-  
+
   private manejarError(error: HttpErrorResponse){
     if(error.error instanceof ErrorEvent){
       console.warn('Error del lado del cliente', error.error.message);

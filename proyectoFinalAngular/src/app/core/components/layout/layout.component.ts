@@ -12,6 +12,9 @@ import { Sesion } from 'src/app/models/sesion';
 export class LayoutComponent implements OnInit {
   sesion!: Sesion;
   sesionSubscription!: Subscription;
+  opened = true;
+  isExpanded: boolean = true;
+  sesion$!: Observable<Sesion>;
   
   constructor(
     private authService: AuthService,
@@ -19,6 +22,7 @@ export class LayoutComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    this.sesion$ = this.authService.obtenerSesion();
     this.sesionSubscription = this.authService.obtenerSesion().subscribe({
       next: (sesion)=> {
         this.sesion = sesion;
@@ -28,7 +32,7 @@ export class LayoutComponent implements OnInit {
 
   cerrarSesion(){
     this.authService.cerrarSesion();
-    this.router.navigate(['login']);
+    this.router.navigate(['auth/login']);
   }
 
 }
